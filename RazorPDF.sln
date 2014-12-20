@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8DFF39
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPDFExample", "RaorPDFExample\RazorPDFExample.csproj", "{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPDFExample", "RazorPDFExample\RazorPDFExample.csproj", "{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
