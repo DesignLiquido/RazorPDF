@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPDF", "RazorPDF\RazorPDF.csproj", "{0EEB1093-C4B8-4830-BC01-2C56E618702E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8DFF398B-B865-4A7A-B7AC-B52D3AF19524}"
@@ -9,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8DFF39
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPDFExample", "RaorPDFExample\RazorPDFExample.csproj", "{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +24,10 @@ Global
 		{0EEB1093-C4B8-4830-BC01-2C56E618702E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EEB1093-C4B8-4830-BC01-2C56E618702E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EEB1093-C4B8-4830-BC01-2C56E618702E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
