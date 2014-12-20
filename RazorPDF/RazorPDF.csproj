@@ -39,6 +39,9 @@
     <Reference Include="itextsharp">
       <HintPath>..\packages\iTextSharp.5.5.4\lib\itextsharp.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp.xmlworker">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.4\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -50,9 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PdfActionResult.cs" />
     <Compile Include="PdfResult.cs" />
     <Compile Include="PdfView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RazorToPdf.cs" />
+    <Compile Include="RazorToPdfExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

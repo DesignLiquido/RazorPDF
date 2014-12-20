@@ -25,24 +25,23 @@ namespace RazorPDFExample.Controllers
                 return View("NotFound");
 
             // get Person
-            var person = new Person();
-            person.UserName = id;
-            person.LuckyNumber = 7;
+            var person = new Person {UserName = id, LuckyNumber = 7};
 
             // pass in Model, then View name
-            var pdf = new PdfResult(person, "PdfModel");
+            var pdf = new PdfActionResult("HtmlToPdf", person);
 
             // Add to the view bag
-            pdf.ViewBag.Title = "Title from ViewBag";
+            // pdf.ViewBag.Title = "Title from ViewBag";
 
             return pdf;
         }
 
-        public PdfResult PdfTake3(string id)
+        public ActionResult PdfTake3(string id)
         {
             var person = new Person() { UserName = id, LuckyNumber = 17 };
 
-            return new PdfResult(person, "PdfModel");
+            // return new PdfResult(person, "PdfModel");
+            return new PdfActionResult("HtmlToPdf", person);
         }
 
         public ActionResult HtmlReport()

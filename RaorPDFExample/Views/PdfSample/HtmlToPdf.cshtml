@@ -1,0 +1,24 @@
+﻿@model RazorPDFExample.Models.Person
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PdfHtmlLayout.cshtml";
+    var imagePath = Server.MapPath("~/Content/Images");
+}
+<h1>@Model.UserName</h1>
+<p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum a urna metus. In id magna eget sapien vehicula sollicitudin fermentum nec ante. Ut iaculis vehicula leo nec posuere. Duis ornare hendrerit sem, nec volutpat nisi placerat a. Nullam convallis vitae augue vitae fringilla. Nunc viverra commodo laoreet. Vivamus fermentum ligula eros, eget sagittis justo euismod eget. Donec dolor neque, scelerisque vel vulputate quis, tincidunt et odio. Duis eget est risus. Phasellus ut nulla accumsan, malesuada sapien non, ornare nibh.
+</p>
+<a href="http://www.highviewsoftwaresolutions.co.uk">http://www.highviewsoftwaresolutions.co.uk</a>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Lucky Number</th>
+        <th>User Name</th>
+    </tr>
+    <tr>
+        <td>@Model.PersonId</td>
+        <td>@Model.LuckyNumber</td>
+        <td>@Model.UserName</td>
+    </tr>
+</table>
