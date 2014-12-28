@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Web.Mvc;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 
 namespace RazorPDF
 {
@@ -18,14 +16,14 @@ namespace RazorPDF
             Model = model;
         }
 
-        public PdfActionResult(object model, Action<PdfWriter, Document> configureSettings)
+        public PdfActionResult(object model, Action<iTextSharp.text.pdf.PdfWriter, iTextSharp.text.Document> configureSettings)
         {
             if (configureSettings == null) throw new ArgumentNullException("configureSettings");
             Model = model;
             ConfigureSettings = configureSettings;
         }
 
-        public PdfActionResult(string viewName, object model, Action<PdfWriter, Document> configureSettings)
+        public PdfActionResult(string viewName, object model, Action<iTextSharp.text.pdf.PdfWriter, iTextSharp.text.Document> configureSettings)
         {
             if (configureSettings == null) throw new ArgumentNullException("configureSettings");
             ViewName = viewName;
@@ -35,7 +33,7 @@ namespace RazorPDF
 
         public string ViewName { get; set; }
         public object Model { get; set; }
-        public Action<PdfWriter, Document> ConfigureSettings { get; set; }
+        public Action<iTextSharp.text.pdf.PdfWriter, iTextSharp.text.Document> ConfigureSettings { get; set; }
 
         public string FileDownloadName { get; set; }
 

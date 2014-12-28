@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8DFF39
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPDFExample", "RazorPDFExample\RazorPDFExample.csproj", "{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPDF.Legacy", "RazorPDF.Legacy\RazorPDF.Legacy.csproj", "{D0341C84-CA01-4ABA-8469-EA28B1A30A14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CF7A056-98A1-43C9-A03E-C9B79A06ED1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0341C84-CA01-4ABA-8469-EA28B1A30A14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0341C84-CA01-4ABA-8469-EA28B1A30A14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0341C84-CA01-4ABA-8469-EA28B1A30A14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0341C84-CA01-4ABA-8469-EA28B1A30A14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

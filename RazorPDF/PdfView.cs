@@ -17,9 +17,9 @@ using System.IO;
 using System.Text;
 using System.Web.Mvc;
 using System.Xml;
-using iTextSharp.text;
-using iTextSharp.text.html.simpleparser;
-using iTextSharp.text.pdf;
+using RazorPDF.Legacy.Text;
+using RazorPDF.Legacy.Text.Html.SimpleParser;
+using RazorPDF.Legacy.Text.Pdf;
 
 namespace RazorPDF
 {
@@ -53,7 +53,6 @@ namespace RazorPDF
             worker.Parse(new StringReader(resultCache));
             worker.EndDocument();
             worker.Close();
-            document.CloseDocument();
             document.Close();
 
             // this is as close as we can get to being "success" before writing output

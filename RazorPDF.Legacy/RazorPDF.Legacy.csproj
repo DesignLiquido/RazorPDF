@@ -1,0 +1,531 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D0341C84-CA01-4ABA-8469-EA28B1A30A14}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RazorPDF.Legacy</RootNamespace>
+    <AssemblyName>RazorPDF.Legacy</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Misc\Drawing\Dimension.cs" />
+    <Compile Include="Misc\Drawing\Dimension2D.cs" />
+    <Compile Include="Misc\Util\Collections\OrderedTree.cs" />
+    <Compile Include="Misc\Util\ListIterator.cs" />
+    <Compile Include="Misc\Util\Properties.cs" />
+    <Compile Include="Misc\Util\StringTokenizer.cs" />
+    <Compile Include="Misc\Util\Util.cs" />
+    <Compile Include="Misc\Util\Zlib\Adler32.cs" />
+    <Compile Include="Misc\Util\Zlib\Deflate.cs" />
+    <Compile Include="Misc\Util\Zlib\InfBlocks.cs" />
+    <Compile Include="Misc\Util\Zlib\InfCodes.cs" />
+    <Compile Include="Misc\Util\Zlib\Inflate.cs" />
+    <Compile Include="Misc\Util\Zlib\InfTree.cs" />
+    <Compile Include="Misc\Util\Zlib\JZlib.cs" />
+    <Compile Include="Misc\Util\Zlib\StaticTree.cs" />
+    <Compile Include="Misc\Util\Zlib\Tree.cs" />
+    <Compile Include="Misc\Util\Zlib\ZDeflaterOutputStream.cs" />
+    <Compile Include="Misc\Util\Zlib\ZInflaterInputStream.cs" />
+    <Compile Include="Misc\Util\Zlib\ZStream.cs" />
+    <Compile Include="Text\Anchor.cs" />
+    <Compile Include="Text\Annotation.cs" />
+    <Compile Include="Text\BadElementException.cs" />
+    <Compile Include="Text\Cell.cs" />
+    <Compile Include="Text\Chapter.cs" />
+    <Compile Include="Text\ChapterAutoNumber.cs" />
+    <Compile Include="Text\Chunk.cs" />
+    <Compile Include="Text\Color.cs" />
+    <Compile Include="Text\Document.cs" />
+    <Compile Include="Text\DocumentException.cs" />
+    <Compile Include="Text\DocWriter.cs" />
+    <Compile Include="Text\Element.cs" />
+    <Compile Include="Text\ElementTags.cs" />
+    <Compile Include="Text\Exceptions\BadPasswordException.cs" />
+    <Compile Include="Text\Exceptions\IllegalPdfSyntaxException.cs" />
+    <Compile Include="Text\Exceptions\InvalidPdfException.cs" />
+    <Compile Include="Text\Exceptions\UnsupportedPdfException.cs" />
+    <Compile Include="Text\Factories\ElementFactory.cs" />
+    <Compile Include="Text\Factories\GreekAlphabetFactory.cs" />
+    <Compile Include="Text\Factories\RomanAlphabetFactory.cs" />
+    <Compile Include="Text\Factories\RomanNumberFactory.cs" />
+    <Compile Include="Text\Font.cs" />
+    <Compile Include="Text\FontFactory.cs" />
+    <Compile Include="Text\FontFactoryImp.cs" />
+    <Compile Include="Text\GreekList.cs" />
+    <Compile Include="Text\Header.cs" />
+    <Compile Include="Text\HeaderFooter.cs" />
+    <Compile Include="Text\Html\HtmlEncoder.cs" />
+    <Compile Include="Text\Html\HtmlParser.cs" />
+    <Compile Include="Text\Html\HtmlPeer.cs" />
+    <Compile Include="Text\Html\HtmlTagMap.cs" />
+    <Compile Include="Text\Html\HtmlTags.cs" />
+    <Compile Include="Text\Html\HtmlWriter.cs" />
+    <Compile Include="Text\Html\ITextmyHtmlHandler.cs" />
+    <Compile Include="Text\Html\Markup.cs" />
+    <Compile Include="Text\Html\SimpleParser\ChainedProperties.cs" />
+    <Compile Include="Text\Html\SimpleParser\FactoryProperties.cs" />
+    <Compile Include="Text\Html\SimpleParser\HTMLWorker.cs" />
+    <Compile Include="Text\Html\SimpleParser\IALink.cs" />
+    <Compile Include="Text\Html\SimpleParser\IImageProvider.cs" />
+    <Compile Include="Text\Html\SimpleParser\IImg.cs" />
+    <Compile Include="Text\Html\SimpleParser\IncCell.cs" />
+    <Compile Include="Text\Html\SimpleParser\IncTable.cs" />
+    <Compile Include="Text\Html\SimpleParser\StyleSheet.cs" />
+    <Compile Include="Text\Html\WebColors.cs" />
+    <Compile Include="Text\IDocListener.cs" />
+    <Compile Include="Text\IElement.cs" />
+    <Compile Include="Text\IElementListener.cs" />
+    <Compile Include="Text\ILargeElement.cs" />
+    <Compile Include="Text\Image.cs" />
+    <Compile Include="Text\ImgCCITT.cs" />
+    <Compile Include="Text\ImgJBIG2.cs" />
+    <Compile Include="Text\ImgRaw.cs" />
+    <Compile Include="Text\ImgTemplate.cs" />
+    <Compile Include="Text\ImgWMF.cs" />
+    <Compile Include="Text\IRtfElementInterface.cs" />
+    <Compile Include="Text\ISplitCharacter.cs" />
+    <Compile Include="Text\ITextElementArray.cs" />
+    <Compile Include="Text\Jpeg.cs" />
+    <Compile Include="Text\Jpeg2000.cs" />
+    <Compile Include="Text\List.cs" />
+    <Compile Include="Text\ListItem.cs" />
+    <Compile Include="Text\MarkedObject.cs" />
+    <Compile Include="Text\MarkedSection.cs" />
+    <Compile Include="Text\Meta.cs" />
+    <Compile Include="Text\PageSize.cs" />
+    <Compile Include="Text\Paragraph.cs" />
+    <Compile Include="Text\Pdf\AcroFields.cs" />
+    <Compile Include="Text\Pdf\ArabicLigaturizer.cs" />
+    <Compile Include="Text\Pdf\BadPasswordException.cs" />
+    <Compile Include="Text\Pdf\BadPdfFormatException.cs" />
+    <Compile Include="Text\Pdf\Barcode.cs" />
+    <Compile Include="Text\Pdf\Barcode128.cs" />
+    <Compile Include="Text\Pdf\Barcode39.cs" />
+    <Compile Include="Text\Pdf\BarcodeCodabar.cs" />
+    <Compile Include="Text\Pdf\BarcodeDatamatrix.cs" />
+    <Compile Include="Text\Pdf\BarcodeEAN.cs" />
+    <Compile Include="Text\Pdf\BarcodeEANSUPP.cs" />
+    <Compile Include="Text\Pdf\BarcodeInter25.cs" />
+    <Compile Include="Text\Pdf\BarcodePDF417.cs" />
+    <Compile Include="Text\Pdf\BarcodePostnet.cs" />
+    <Compile Include="Text\Pdf\BaseField.cs" />
+    <Compile Include="Text\Pdf\BaseFont.cs" />
+    <Compile Include="Text\Pdf\BidiLine.cs" />
+    <Compile Include="Text\Pdf\BidiOrder.cs" />
+    <Compile Include="Text\Pdf\ByteBuffer.cs" />
+    <Compile Include="Text\Pdf\CFFFont.cs" />
+    <Compile Include="Text\Pdf\CFFFontSubset.cs" />
+    <Compile Include="Text\Pdf\CJKFont.cs" />
+    <Compile Include="Text\Pdf\CMYKColor.cs" />
+    <Compile Include="Text\Pdf\Codec\BmpImage.cs" />
+    <Compile Include="Text\Pdf\Codec\CCITTG4Encoder.cs" />
+    <Compile Include="Text\Pdf\Codec\GifImage.cs" />
+    <Compile Include="Text\Pdf\Codec\JBIG2Image.cs" />
+    <Compile Include="Text\Pdf\Codec\JBIG2SegmentReader.cs" />
+    <Compile Include="Text\Pdf\Codec\PngImage.cs" />
+    <Compile Include="Text\Pdf\Codec\TIFFConstants.cs" />
+    <Compile Include="Text\Pdf\Codec\TIFFDirectory.cs" />
+    <Compile Include="Text\Pdf\Codec\TIFFFaxDecoder.cs" />
+    <Compile Include="Text\Pdf\Codec\TIFFField.cs" />
+    <Compile Include="Text\Pdf\Codec\TiffImage.cs" />
+    <Compile Include="Text\Pdf\Codec\TIFFLZWDecoder.cs" />
+    <Compile Include="Text\Pdf\Codec\Wmf\InputMeta.cs" />
+    <Compile Include="Text\Pdf\Codec\Wmf\MetaBrush.cs" />
+    <Compile Include="Text\Pdf\Codec\Wmf\MetaDo.cs" />
+    <Compile Include="Text\Pdf\Codec\Wmf\MetaFont.cs" />
+    <Compile Include="Text\Pdf\Codec\Wmf\MetaObject.cs" />
+    <Compile Include="Text\Pdf\Codec\Wmf\MetaPen.cs" />
+    <Compile Include="Text\Pdf\Codec\Wmf\MetaState.cs" />
+    <Compile Include="Text\Pdf\CodeFile1.cs" />
+    <Compile Include="Text\Pdf\Collection\PdfCollection.cs" />
+    <Compile Include="Text\Pdf\Collection\PdfCollectionField.cs" />
+    <Compile Include="Text\Pdf\Collection\PdfCollectionItem.cs" />
+    <Compile Include="Text\Pdf\Collection\PdfCollectionSchema.cs" />
+    <Compile Include="Text\Pdf\Collection\PdfCollectionSort.cs" />
+    <Compile Include="Text\Pdf\Collection\PdfTargetDictionary.cs" />
+    <Compile Include="Text\Pdf\ColorDetails.cs" />
+    <Compile Include="Text\Pdf\ColumnText.cs" />
+    <Compile Include="Text\Pdf\Crypto\AESCipher.cs" />
+    <Compile Include="Text\Pdf\Crypto\ARCFOUREncryption.cs" />
+    <Compile Include="Text\Pdf\Crypto\IVGenerator.cs" />
+    <Compile Include="Text\Pdf\DefaultSplitCharacter.cs" />
+    <Compile Include="Text\Pdf\DocumentFont.cs" />
+    <Compile Include="Text\Pdf\Draw\DottedLineSeparator.cs" />
+    <Compile Include="Text\Pdf\Draw\IDrawInterface.cs" />
+    <Compile Include="Text\Pdf\Draw\LineSeparator.cs" />
+    <Compile Include="Text\Pdf\Draw\VerticalPositionMark.cs" />
+    <Compile Include="Text\Pdf\EnumerateTTC.cs" />
+    <Compile Include="Text\Pdf\Events\FieldPositioningEvents.cs" />
+    <Compile Include="Text\Pdf\Events\IndexEvents.cs" />
+    <Compile Include="Text\Pdf\Events\PdfPageEventForwarder.cs" />
+    <Compile Include="Text\Pdf\Events\PdfPCellEventForwarder.cs" />
+    <Compile Include="Text\Pdf\Events\PdfPTableEventForwarder.cs" />
+    <Compile Include="Text\Pdf\ExtendedColor.cs" />
+    <Compile Include="Text\Pdf\FdfReader.cs" />
+    <Compile Include="Text\Pdf\FdfWriter.cs" />
+    <Compile Include="Text\Pdf\FontDetails.cs" />
+    <Compile Include="Text\Pdf\FontSelector.cs" />
+    <Compile Include="Text\Pdf\GlyphList.cs" />
+    <Compile Include="Text\Pdf\GrayColor.cs" />
+    <Compile Include="Text\Pdf\HyphenationAuto.cs" />
+    <Compile Include="Text\Pdf\Hyphenation\ByteVector.cs" />
+    <Compile Include="Text\Pdf\Hyphenation\CharVector.cs" />
+    <Compile Include="Text\Pdf\Hyphenation\Hyphen.cs" />
+    <Compile Include="Text\Pdf\Hyphenation\Hyphenation.cs" />
+    <Compile Include="Text\Pdf\Hyphenation\HyphenationException.cs" />
+    <Compile Include="Text\Pdf\Hyphenation\HyphenationTree.cs" />
+    <Compile Include="Text\Pdf\Hyphenation\Hyphenator.cs" />
+    <Compile Include="Text\Pdf\Hyphenation\IPatternConsumer.cs" />
+    <Compile Include="Text\Pdf\Hyphenation\SimplePatternParser.cs" />
+    <Compile Include="Text\Pdf\Hyphenation\TernaryTree.cs" />
+    <Compile Include="Text\Pdf\ICC_Profile.cs" />
+    <Compile Include="Text\Pdf\IExtraEncoding.cs" />
+    <Compile Include="Text\Pdf\IHyphenationEvent.cs" />
+    <Compile Include="Text\Pdf\Interfaces\IPdfAnnotations.cs" />
+    <Compile Include="Text\Pdf\Interfaces\IPdfDocumentActions.cs" />
+    <Compile Include="Text\Pdf\Interfaces\IPdfEncryptionSettings.cs" />
+    <Compile Include="Text\Pdf\Interfaces\IPdfPageActions.cs" />
+    <Compile Include="Text\Pdf\Interfaces\IPdfRunDirection.cs" />
+    <Compile Include="Text\Pdf\Interfaces\IPdfVersion.cs" />
+    <Compile Include="Text\Pdf\Interfaces\IPdfViewerPreferences.cs" />
+    <Compile Include="Text\Pdf\Interfaces\IPdfXConformance.cs" />
+    <Compile Include="Text\Pdf\Intern\PdfAnnotationsImp.cs" />
+    <Compile Include="Text\Pdf\Intern\PdfVersionImp.cs" />
+    <Compile Include="Text\Pdf\Intern\PdfViewerPreferencesImp.cs" />
+    <Compile Include="Text\Pdf\Intern\PdfXConformanceImp.cs" />
+    <Compile Include="Text\Pdf\IntHashtable.cs" />
+    <Compile Include="Text\Pdf\IOcspClient.cs" />
+    <Compile Include="Text\Pdf\IPdfOCG.cs" />
+    <Compile Include="Text\Pdf\IPdfPageEvent.cs" />
+    <Compile Include="Text\Pdf\IPdfPCellEvent.cs" />
+    <Compile Include="Text\Pdf\IPdfPTableEvent.cs" />
+    <Compile Include="Text\Pdf\ITSAClient.cs" />
+    <Compile Include="Text\Pdf\LZWDecoder.cs" />
+    <Compile Include="Text\Pdf\MultiColumnText.cs" />
+    <Compile Include="Text\Pdf\OcspClientBouncyCastle.cs" />
+    <Compile Include="Text\Pdf\OutputStreamCounter.cs" />
+    <Compile Include="Text\Pdf\OutputStreamEncryption.cs" />
+    <Compile Include="Text\Pdf\PageResources.cs" />
+    <Compile Include="Text\Pdf\PatternColor.cs" />
+    <Compile Include="Text\Pdf\PdfAcroForm.cs" />
+    <Compile Include="Text\Pdf\PdfAction.cs" />
+    <Compile Include="Text\Pdf\PdfAnnotation.cs" />
+    <Compile Include="Text\Pdf\PdfAppearance.cs" />
+    <Compile Include="Text\Pdf\PdfArray.cs" />
+    <Compile Include="Text\Pdf\PdfBoolean.cs" />
+    <Compile Include="Text\Pdf\PdfBorderArray.cs" />
+    <Compile Include="Text\Pdf\PdfBorderDictionary.cs" />
+    <Compile Include="Text\Pdf\PdfCell.cs" />
+    <Compile Include="Text\Pdf\PdfChunk.cs" />
+    <Compile Include="Text\Pdf\PdfColor.cs" />
+    <Compile Include="Text\Pdf\PdfContentByte.cs" />
+    <Compile Include="Text\Pdf\PdfContentParser.cs" />
+    <Compile Include="Text\Pdf\PdfContents.cs" />
+    <Compile Include="Text\Pdf\PdfCopy.cs" />
+    <Compile Include="Text\Pdf\PdfCopyFields.cs" />
+    <Compile Include="Text\Pdf\PdfCopyFieldsImp.cs" />
+    <Compile Include="Text\Pdf\PdfCopyForms.cs" />
+    <Compile Include="Text\Pdf\PdfCopyFormsImp.cs" />
+    <Compile Include="Text\Pdf\PdfDashPattern.cs" />
+    <Compile Include="Text\Pdf\PdfDate.cs" />
+    <Compile Include="Text\Pdf\PdfDestination.cs" />
+    <Compile Include="Text\Pdf\PdfDeveloperExtension.cs" />
+    <Compile Include="Text\Pdf\PdfDictionary.cs" />
+    <Compile Include="Text\Pdf\PdfDocument.cs" />
+    <Compile Include="Text\Pdf\PdfEFStream.cs" />
+    <Compile Include="Text\Pdf\PdfEncodings.cs" />
+    <Compile Include="Text\Pdf\PdfEncryption.cs" />
+    <Compile Include="Text\Pdf\PdfEncryptor.cs" />
+    <Compile Include="Text\Pdf\PdfException.cs" />
+    <Compile Include="Text\Pdf\PdfFileSpecification.cs" />
+    <Compile Include="Text\Pdf\PdfFont.cs" />
+    <Compile Include="Text\Pdf\PdfFormField.cs" />
+    <Compile Include="Text\Pdf\PdfFormXObject.cs" />
+    <Compile Include="Text\Pdf\PdfFunction.cs" />
+    <Compile Include="Text\Pdf\PdfGState.cs" />
+    <Compile Include="Text\Pdf\PdfICCBased.cs" />
+    <Compile Include="Text\Pdf\PdfImage.cs" />
+    <Compile Include="Text\Pdf\PdfImportedPage.cs" />
+    <Compile Include="Text\Pdf\PdfIndirectObject.cs" />
+    <Compile Include="Text\Pdf\PdfIndirectReference.cs" />
+    <Compile Include="Text\Pdf\PdfLayer.cs" />
+    <Compile Include="Text\Pdf\PdfLayerMembership.cs" />
+    <Compile Include="Text\Pdf\PdfLine.cs" />
+    <Compile Include="Text\Pdf\PdfLiteral.cs" />
+    <Compile Include="Text\Pdf\PdfMediaClipData.cs" />
+    <Compile Include="Text\Pdf\PdfName.cs" />
+    <Compile Include="Text\Pdf\PdfNameTree.cs" />
+    <Compile Include="Text\Pdf\PdfNull.cs" />
+    <Compile Include="Text\Pdf\PdfNumber.cs" />
+    <Compile Include="Text\Pdf\PdfNumberTree.cs" />
+    <Compile Include="Text\Pdf\PdfObject.cs" />
+    <Compile Include="Text\Pdf\PdfOCProperties.cs" />
+    <Compile Include="Text\Pdf\PdfOutline.cs" />
+    <Compile Include="Text\Pdf\PdfPage.cs" />
+    <Compile Include="Text\Pdf\PdfPageEventHelper.cs" />
+    <Compile Include="Text\Pdf\PdfPageLabels.cs" />
+    <Compile Include="Text\Pdf\PdfPages.cs" />
+    <Compile Include="Text\Pdf\PdfPattern.cs" />
+    <Compile Include="Text\Pdf\PdfPatternPainter.cs" />
+    <Compile Include="Text\Pdf\PdfPCell.cs" />
+    <Compile Include="Text\Pdf\PdfPKCS7.cs" />
+    <Compile Include="Text\Pdf\PdfPRow.cs" />
+    <Compile Include="Text\Pdf\PdfPSXObject.cs" />
+    <Compile Include="Text\Pdf\PdfPTable.cs" />
+    <Compile Include="Text\Pdf\PdfPublicKeyRecipient.cs" />
+    <Compile Include="Text\Pdf\PdfPublicKeySecurityHandler.cs" />
+    <Compile Include="Text\Pdf\PdfReader.cs" />
+    <Compile Include="Text\Pdf\PdfReaderInstance.cs" />
+    <Compile Include="Text\Pdf\PdfRectangle.cs" />
+    <Compile Include="Text\Pdf\PdfRendition.cs" />
+    <Compile Include="Text\Pdf\PdfResources.cs" />
+    <Compile Include="Text\Pdf\PdfShading.cs" />
+    <Compile Include="Text\Pdf\PdfShadingPattern.cs" />
+    <Compile Include="Text\Pdf\PdfSigGenericPKCS.cs" />
+    <Compile Include="Text\Pdf\PdfSignature.cs" />
+    <Compile Include="Text\Pdf\PdfSignatureAppearance.cs" />
+    <Compile Include="Text\Pdf\PdfSmartCopy.cs" />
+    <Compile Include="Text\Pdf\PdfSpotColor.cs" />
+    <Compile Include="Text\Pdf\PdfStamper.cs" />
+    <Compile Include="Text\Pdf\PdfStamperImp.cs" />
+    <Compile Include="Text\Pdf\PdfStream.cs" />
+    <Compile Include="Text\Pdf\PdfString.cs" />
+    <Compile Include="Text\Pdf\PdfStructureElement.cs" />
+    <Compile Include="Text\Pdf\PdfStructureTreeRoot.cs" />
+    <Compile Include="Text\Pdf\PdfTable.cs" />
+    <Compile Include="Text\Pdf\PdfTemplate.cs" />
+    <Compile Include="Text\Pdf\PdfTextArray.cs" />
+    <Compile Include="Text\Pdf\PdfTransition.cs" />
+    <Compile Include="Text\Pdf\PdfTransparencyGroup.cs" />
+    <Compile Include="Text\Pdf\PdfWriter.cs" />
+    <Compile Include="Text\Pdf\PdfXConformanceException.cs" />
+    <Compile Include="Text\Pdf\Pfm2afm.cs" />
+    <Compile Include="Text\Pdf\PRAcroForm.cs" />
+    <Compile Include="Text\Pdf\PRIndirectReference.cs" />
+    <Compile Include="Text\Pdf\PRStream.cs" />
+    <Compile Include="Text\Pdf\PRTokeniser.cs" />
+    <Compile Include="Text\Pdf\PushbuttonField.cs" />
+    <Compile Include="Text\Pdf\RadioCheckField.cs" />
+    <Compile Include="Text\Pdf\RandomAccessFileOrArray.cs" />
+    <Compile Include="Text\Pdf\SequenceList.cs" />
+    <Compile Include="Text\Pdf\ShadingColor.cs" />
+    <Compile Include="Text\Pdf\SimpleBookmark.cs" />
+    <Compile Include="Text\Pdf\SimpleNamedDestination.cs" />
+    <Compile Include="Text\Pdf\SpotColor.cs" />
+    <Compile Include="Text\Pdf\StampContent.cs" />
+    <Compile Include="Text\Pdf\StandardDecryption.cs" />
+    <Compile Include="Text\Pdf\TextField.cs" />
+    <Compile Include="Text\Pdf\TrueTypeFont.cs" />
+    <Compile Include="Text\Pdf\TrueTypeFontSubSet.cs" />
+    <Compile Include="Text\Pdf\TrueTypeFontUnicode.cs" />
+    <Compile Include="Text\Pdf\TSAClientBouncyCastle.cs" />
+    <Compile Include="Text\Pdf\Type1Font.cs" />
+    <Compile Include="Text\Pdf\Type3Font.cs" />
+    <Compile Include="Text\Pdf\Type3Glyph.cs" />
+    <Compile Include="Text\Pdf\VerticalText.cs" />
+    <Compile Include="Text\Pdf\XfaForm.cs" />
+    <Compile Include="Text\Pdf\XfdfReader.cs" />
+    <Compile Include="Text\Phrase.cs" />
+    <Compile Include="Text\Rectangle.cs" />
+    <Compile Include="Text\RectangleReadOnly.cs" />
+    <Compile Include="Text\RomanList.cs" />
+    <Compile Include="Text\Row.cs" />
+    <Compile Include="Text\Rtf\Direct\RtfDirectContent.cs" />
+    <Compile Include="Text\Rtf\Document\Output\IRtfDataCache.cs" />
+    <Compile Include="Text\Rtf\Document\Output\RtfByteArrayBuffer.cs" />
+    <Compile Include="Text\Rtf\Document\Output\RtfDiskCache.cs" />
+    <Compile Include="Text\Rtf\Document\Output\RtfEfficientMemoryCache.cs" />
+    <Compile Include="Text\Rtf\Document\Output\RtfMemoryCache.cs" />
+    <Compile Include="Text\Rtf\Document\Output\RtfNilOutputStream.cs" />
+    <Compile Include="Text\Rtf\Document\RtfCodePage.cs" />
+    <Compile Include="Text\Rtf\Document\RtfDocument.cs" />
+    <Compile Include="Text\Rtf\Document\RtfDocumentHeader.cs" />
+    <Compile Include="Text\Rtf\Document\RtfDocumentSettings.cs" />
+    <Compile Include="Text\Rtf\Document\RtfGenerator.cs" />
+    <Compile Include="Text\Rtf\Document\RtfInfoElement.cs" />
+    <Compile Include="Text\Rtf\Document\RtfInfoGroup.cs" />
+    <Compile Include="Text\Rtf\Document\RtfPageSetting.cs" />
+    <Compile Include="Text\Rtf\Document\RtfProtection.cs" />
+    <Compile Include="Text\Rtf\Document\RtfProtectionSetting.cs" />
+    <Compile Include="Text\Rtf\Field\RtfAnchor.cs" />
+    <Compile Include="Text\Rtf\Field\RtfField.cs" />
+    <Compile Include="Text\Rtf\Field\RtfPageNumber.cs" />
+    <Compile Include="Text\Rtf\Field\RtfTableOfContents.cs" />
+    <Compile Include="Text\Rtf\Field\RtfTOCEntry.cs" />
+    <Compile Include="Text\Rtf\Field\RtfTotalPageNumber.cs" />
+    <Compile Include="Text\Rtf\Graphic\RtfImage.cs" />
+    <Compile Include="Text\Rtf\Graphic\RtfShape.cs" />
+    <Compile Include="Text\Rtf\Graphic\RtfShapePosition.cs" />
+    <Compile Include="Text\Rtf\Graphic\RtfShapeProperty.cs" />
+    <Compile Include="Text\Rtf\HeaderFooter\RtfHeaderFooter.cs" />
+    <Compile Include="Text\Rtf\HeaderFooter\RtfHeaderFooterGroup.cs" />
+    <Compile Include="Text\Rtf\IEventListener.cs" />
+    <Compile Include="Text\Rtf\IRtfBasicElement.cs" />
+    <Compile Include="Text\Rtf\IRtfExtendedElement.cs" />
+    <Compile Include="Text\Rtf\List\RtfList.cs" />
+    <Compile Include="Text\Rtf\List\RtfListItem.cs" />
+    <Compile Include="Text\Rtf\List\RtfListLevel.cs" />
+    <Compile Include="Text\Rtf\List\RtfListTable.cs" />
+    <Compile Include="Text\Rtf\List\RtfPictureList.cs" />
+    <Compile Include="Text\Rtf\Parser\CtrlWords\IRtfCtrlWordListener.cs" />
+    <Compile Include="Text\Rtf\Parser\CtrlWords\RtfCtrlWordData.cs" />
+    <Compile Include="Text\Rtf\Parser\CtrlWords\RtfCtrlWordHandler.cs" />
+    <Compile Include="Text\Rtf\Parser\CtrlWords\RtfCtrlWordMap.cs" />
+    <Compile Include="Text\Rtf\Parser\CtrlWords\RtfCtrlWordMgr.cs" />
+    <Compile Include="Text\Rtf\Parser\CtrlWords\RtfCtrlWordType.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\IRtfDestinationListener.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\RtfDestination.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\RtfDestinationColorTable.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\RtfDestinationDocument.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\RtfDestinationFontTable.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\RtfDestinationInfo.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\RtfDestinationListTable.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\RtfDestinationMgr.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\RtfDestinationNull.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\RtfDestinationShppict.cs" />
+    <Compile Include="Text\Rtf\Parser\Destinations\RtfDestinationStylesheetTable.cs" />
+    <Compile Include="Text\Rtf\Parser\Enumerations\RtfColorThemes.cs" />
+    <Compile Include="Text\Rtf\Parser\Exceptions\RtfParserException.cs" />
+    <Compile Include="Text\Rtf\Parser\Exceptions\RtfUnknownCtrlWordException.cs" />
+    <Compile Include="Text\Rtf\Parser\Properties\IRtfPropertyListener.cs" />
+    <Compile Include="Text\Rtf\Parser\Properties\RtfCtrlWordPropertyType.cs" />
+    <Compile Include="Text\Rtf\Parser\Properties\RtfProperty.cs" />
+    <Compile Include="Text\Rtf\Parser\PushbackStream.cs" />
+    <Compile Include="Text\Rtf\Parser\RtfImportMappings.cs" />
+    <Compile Include="Text\Rtf\Parser\RtfImportMgr.cs" />
+    <Compile Include="Text\Rtf\Parser\RtfParser.cs" />
+    <Compile Include="Text\Rtf\Parser\RtfParserState.cs" />
+    <Compile Include="Text\Rtf\RtfAddableElement.cs" />
+    <Compile Include="Text\Rtf\RtfElement.cs" />
+    <Compile Include="Text\Rtf\RtfMapper.cs" />
+    <Compile Include="Text\Rtf\RtfWriter2.cs" />
+    <Compile Include="Text\Rtf\Style\RtfColor.cs" />
+    <Compile Include="Text\Rtf\Style\RtfColorList.cs" />
+    <Compile Include="Text\Rtf\Style\RtfFont.cs" />
+    <Compile Include="Text\Rtf\Style\RtfFontList.cs" />
+    <Compile Include="Text\Rtf\Style\RtfParagraphStyle.cs" />
+    <Compile Include="Text\Rtf\Style\RtfStylesheetList.cs" />
+    <Compile Include="Text\Rtf\Style\RtfStyleTypes.cs" />
+    <Compile Include="Text\Rtf\Table\RtfBorder.cs" />
+    <Compile Include="Text\Rtf\Table\RtfBorderGroup.cs" />
+    <Compile Include="Text\Rtf\Table\RtfCell.cs" />
+    <Compile Include="Text\Rtf\Table\RtfRow.cs" />
+    <Compile Include="Text\Rtf\Table\RtfTable.cs" />
+    <Compile Include="Text\Rtf\Text\RtfAnnotation.cs" />
+    <Compile Include="Text\Rtf\Text\RtfChapter.cs" />
+    <Compile Include="Text\Rtf\Text\RtfChunk.cs" />
+    <Compile Include="Text\Rtf\Text\RtfNewPage.cs" />
+    <Compile Include="Text\Rtf\Text\RtfParagraph.cs" />
+    <Compile Include="Text\Rtf\Text\RtfPhrase.cs" />
+    <Compile Include="Text\Rtf\Text\RtfSection.cs" />
+    <Compile Include="Text\Rtf\Text\RtfTab.cs" />
+    <Compile Include="Text\Rtf\Text\RtfTabGroup.cs" />
+    <Compile Include="Text\Section.cs" />
+    <Compile Include="Text\SimpleCell.cs" />
+    <Compile Include="Text\SimpleTable.cs" />
+    <Compile Include="Text\SpecialSymbol.cs" />
+    <Compile Include="Text\Table.cs" />
+    <Compile Include="Text\Utilities.cs" />
+    <Compile Include="Text\Xml\ITextHandler.cs" />
+    <Compile Include="Text\Xml\ITextmyHandler.cs" />
+    <Compile Include="Text\Xml\ParserBase.cs" />
+    <Compile Include="Text\Xml\SimpleParser\EntitiesToSymbol.cs" />
+    <Compile Include="Text\Xml\SimpleParser\EntitiesToUnicode.cs" />
+    <Compile Include="Text\Xml\SimpleParser\IanaEncodings.cs" />
+    <Compile Include="Text\Xml\SimpleParser\ISimpleXMLDocHandler.cs" />
+    <Compile Include="Text\Xml\SimpleParser\ISimpleXMLDocHandlerComment.cs" />
+    <Compile Include="Text\Xml\SimpleParser\SimpleXMLParser.cs" />
+    <Compile Include="Text\Xml\TagMap.cs" />
+    <Compile Include="Text\Xml\XmlParser.cs" />
+    <Compile Include="Text\Xml\XmlPeer.cs" />
+    <Compile Include="Text\Xml\Xmp\DublinCoreSchema.cs" />
+    <Compile Include="Text\Xml\Xmp\EncodingNoPreamble.cs" />
+    <Compile Include="Text\Xml\Xmp\LangAlt.cs" />
+    <Compile Include="Text\Xml\Xmp\PdfA1Schema.cs" />
+    <Compile Include="Text\Xml\Xmp\PdfSchema.cs" />
+    <Compile Include="Text\Xml\Xmp\XmpArray.cs" />
+    <Compile Include="Text\Xml\Xmp\XmpBasicSchema.cs" />
+    <Compile Include="Text\Xml\Xmp\XmpMMSchema.cs" />
+    <Compile Include="Text\Xml\Xmp\XmpReader.cs" />
+    <Compile Include="Text\Xml\Xmp\XmpSchema.cs" />
+    <Compile Include="Text\Xml\Xmp\XmpWriter.cs" />
+    <Compile Include="Text\ZapfDingbatsList.cs" />
+    <Compile Include="Text\ZapfDingbatsNumberList.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Text\Pdf\Fonts\Courier-Bold.afm" />
+    <None Include="Text\Pdf\Fonts\Courier-BoldOblique.afm" />
+    <None Include="Text\Pdf\Fonts\Courier-Oblique.afm" />
+    <None Include="Text\Pdf\Fonts\Courier.afm" />
+    <None Include="Text\Pdf\Fonts\Helvetica-Bold.afm" />
+    <None Include="Text\Pdf\Fonts\Helvetica-BoldOblique.afm" />
+    <None Include="Text\Pdf\Fonts\Helvetica-Oblique.afm" />
+    <None Include="Text\Pdf\Fonts\Helvetica.afm" />
+    <None Include="Text\Pdf\Fonts\Symbol.afm" />
+    <None Include="Text\Pdf\Fonts\Times-Bold.afm" />
+    <None Include="Text\Pdf\Fonts\Times-BoldItalic.afm" />
+    <None Include="Text\Pdf\Fonts\Times-Italic.afm" />
+    <None Include="Text\Pdf\Fonts\Times-Roman.afm" />
+    <None Include="Text\Pdf\Fonts\ZapfDingbats.afm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Text\Pdf\Fonts\glyphlist.txt" />
+    <Content Include="Text\Pdf\Fonts\mustRead.html" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
