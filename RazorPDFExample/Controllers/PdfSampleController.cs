@@ -25,7 +25,7 @@ namespace RazorPDFExample.Controllers
                 return View("NotFound");
 
             // get Person
-            var person = new Person {UserName = id, LuckyNumber = 7};
+            var person = new Person { UserName = id, LuckyNumber = 7 };
 
             // pass in Model, then View name
             var pdf = new PdfActionResult("HtmlToPdf", person);
@@ -53,7 +53,10 @@ namespace RazorPDFExample.Controllers
 
             // Output to Pdf?
             if (Request.QueryString["format"] == "pdf")
+            {
                 return new PdfResult(list, "HtmlReport");
+            }
+
 
             return View(list);
         }

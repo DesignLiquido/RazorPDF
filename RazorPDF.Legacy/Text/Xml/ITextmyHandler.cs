@@ -53,22 +53,26 @@ using RazorPDF.Legacy.Misc.Util;
  * http://www.lowagie.com/iText/
  */
 
-namespace RazorPDF.Legacy.Text.Xml {
+namespace RazorPDF.Legacy.Text.Xml
+{
 
     /// <summary>
     /// The <CODE>iTextmyHandler</CODE>-class maps several XHTML-tags to iText-objects.
     /// </summary>
-    public class ITextmyHandler : ITextHandler {
-    
+    public class ITextmyHandler : ITextHandler
+    {
+
         /// <summary>
         /// Constructs a new iTextHandler that will translate all the events
         /// triggered by the parser to actions on the <CODE>Document</CODE>-object.
         /// </summary>
         /// <param name="document">this is the document on which events must be triggered</param>
         /// <param name="myTags">a map of tags</param>
-        public ITextmyHandler(IDocListener document, Hashtable myTags) : base(document, myTags) {
+        public ITextmyHandler(IDocListener document, Hashtable myTags)
+            : base(document, myTags)
+        {
         }
-    
+
         /// <summary>
         /// This method gets called when a start tag is encountered.
         /// </summary>
@@ -76,34 +80,42 @@ namespace RazorPDF.Legacy.Text.Xml {
         /// <param name="lname"></param>
         /// <param name="name">the name of the tag that is encountered</param>
         /// <param name="attrs">the list of attributes</param>
-        public override void StartElement(String uri, String lname, String name, Hashtable attrs) {
-            if (myTags.ContainsKey(name)) {
-                XmlPeer peer = (XmlPeer) myTags[name];
+        public override void StartElement(String uri, String lname, String name, Hashtable attrs)
+        {
+            if (myTags.ContainsKey(name))
+            {
+                XmlPeer peer = (XmlPeer)myTags[name];
                 HandleStartingTags(peer.Tag, peer.GetAttributes(attrs));
             }
-            else {
-                Properties attributes = new Properties();
-                if (attrs != null) {
-                    foreach (string key in attrs.Keys) {
+            else
+            {
+                var attributes = new TagProperties();
+                if (attrs != null)
+                {
+                    foreach (string key in attrs.Keys)
+                    {
                         attributes.Add(key, (string)attrs[key]);
                     }
                 }
                 HandleStartingTags(name, attributes);
             }
         }
-    
+
         /// <summary>
         /// This method gets called when an end tag is encountered.
         /// </summary>
         /// <param name="uri"></param>
         /// <param name="lname"></param>
         /// <param name="name">the name of the tag that ends</param>
-        public override void EndElement(String uri, String lname, String name) {
-            if (myTags.ContainsKey(name)) {
-                XmlPeer peer = (XmlPeer) myTags[name];
+        public override void EndElement(String uri, String lname, String name)
+        {
+            if (myTags.ContainsKey(name))
+            {
+                XmlPeer peer = (XmlPeer)myTags[name];
                 HandleEndingTags(peer.Tag);
             }
-            else {
+            else
+            {
                 HandleEndingTags(name);
             }
         }

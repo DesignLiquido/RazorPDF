@@ -68,8 +68,9 @@ namespace RazorPDF.Legacy.Text{
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
-        public static ICollection GetKeySet(Properties table) {
-            return (table == null) ? new Properties().Keys : table.Keys;
+        public static ICollection GetKeySet(TagProperties table)
+        {
+            return (table == null) ? new TagProperties().Keys : table.Keys;
         }
 
         /**
@@ -98,7 +99,8 @@ namespace RazorPDF.Legacy.Text{
 	    * @param key
 	    * @return
 	    */
-	    public static bool CheckTrueOrFalse(Properties attributes, String key) {
+        public static bool CheckTrueOrFalse(TagProperties attributes, String key)
+        {
 		    return Util.EqualsIgnoreCase("true", attributes[key]);
 	    }
 

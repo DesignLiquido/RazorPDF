@@ -50,34 +50,39 @@ using System.Text;
  * http://www.lowagie.com/iText/
  */
 using RazorPDF.Legacy.Misc.Util;
-using RazorPDF.Legacy.Misc.Util;
 
-namespace RazorPDF.Legacy.Text.Xml.Xmp {
-    public class LangAlt : Properties {
+namespace RazorPDF.Legacy.Text.Xml.Xmp
+{
+    public class LangAlt : TagProperties
+    {
 
         /** Key for the default language. */
         public const String DEFAULT = "x-default";
 
         /** Creates a Properties object that stores languages for use in an XmpSchema */
-        public LangAlt(String defaultValue) {
+        public LangAlt(String defaultValue)
+        {
             AddLanguage(DEFAULT, defaultValue);
         }
 
         /** Creates a Properties object that stores languages for use in an XmpSchema */
-        public LangAlt() {
+        public LangAlt()
+        {
         }
 
         /**
          * Add a language.
          */
-        public void AddLanguage(String language, String value) {
+        public void AddLanguage(String language, String value)
+        {
             this[language] = XmpSchema.Escape(value);
         }
 
         /**
          * Process a property.
          */
-        protected internal void Process(StringBuilder buf, String lang) {
+        protected internal void Process(StringBuilder buf, String lang)
+        {
             buf.Append("<rdf:li xml:lang=\"");
             buf.Append(lang);
             buf.Append("\" >");
@@ -88,7 +93,8 @@ namespace RazorPDF.Legacy.Text.Xml.Xmp {
         /**
          * Creates a String that can be used in an XmpSchema.
          */
-        public override String ToString() {
+        public override String ToString()
+        {
             StringBuilder sb = new StringBuilder();
             sb.Append("<rdf:Alt>");
             foreach (String s in this.Keys)

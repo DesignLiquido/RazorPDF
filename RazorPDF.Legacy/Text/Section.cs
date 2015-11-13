@@ -55,7 +55,8 @@ using RazorPDF.Legacy.Misc.Util;
  * http://www.lowagie.com/iText/
  */
 
-namespace RazorPDF.Legacy.Text{
+namespace RazorPDF.Legacy.Text
+{
     /// <summary>
     /// A Section is a part of a Document containing
     /// other Sections, Paragraphs, List
@@ -82,8 +83,9 @@ namespace RazorPDF.Legacy.Text{
     /// section11.Add(someSectionText);</strong>strong>
     /// </code>
     /// </example>
-    public class Section : ArrayList, ITextElementArray, ILargeElement {
-        
+    public class Section : ArrayList, ITextElementArray, ILargeElement
+    {
+
         // constant
         /**
         * A possible number style. The default number style: "1.2.3."
@@ -95,57 +97,57 @@ namespace RazorPDF.Legacy.Text{
         * @since   iText 2.0.8
         */
         public const int NUMBERSTYLE_DOTTED_WITHOUT_FINAL_DOT = 1;
-        
+
         // membervariables
-    
+
         ///<summary> This is the title of this section. </summary>
         protected Paragraph title;
-    
+
         ///<summary> This is the number of sectionnumbers that has to be shown before the section title. </summary>
         protected int numberDepth;
-    
+
         /**
         * The style for sectionnumbers.
         * @since    iText 2.0.8
         */
         protected int numberStyle = NUMBERSTYLE_DOTTED;
-        
+
         ///<summary> The indentation of this section on the left side. </summary>
         protected float indentationLeft;
-    
+
         ///<summary> The indentation of this section on the right side. </summary>
         protected float indentationRight;
-    
+
         ///<summary> The additional indentation of the content of this section. </summary>
         protected float indentation;
-    
+
         ///<summary> This is the number of subsections. </summary>
         protected int subsections = 0;
-    
+
         ///<summary> This is the complete list of sectionnumbers of this section and the parents of this section. </summary>
         protected internal ArrayList numbers = null;
-    
-    /**
-        * Indicates if the Section will be complete once added to the document.
-        * @since   iText 2.0.8
-        */
+
+        /**
+            * Indicates if the Section will be complete once added to the document.
+            * @since   iText 2.0.8
+            */
         protected bool complete = true;
-        
+
         /**
         * Indicates if the Section was added completely to the document.
         * @since   iText 2.0.8
         */
         protected bool addedCompletely = false;
-        
+
         /**
         * Indicates if this is the first time the section was added.
         * @since   iText 2.0.8
         */
         protected bool notAddedYet = true;
-        
+
         ///<summary> false if the bookmark children are not visible </summary>
         protected bool bookmarkOpen = true;
-    
+
         /** true if the section has to trigger a new page */
         protected bool triggerNewPage = false;
 
@@ -153,90 +155,103 @@ namespace RazorPDF.Legacy.Text{
         protected string bookmarkTitle;
 
         // constructors
-    
+
         /// <summary>
         /// Constructs a new Section.
         /// </summary>
         /// <overloads>
         /// Has 2 overloads.
         /// </overloads>
-        protected internal Section() {
+        protected internal Section()
+        {
             title = new Paragraph();
             numberDepth = 1;
         }
-    
+
         /// <summary>
         /// Constructs a new Section.
         /// </summary>
         /// <param name="title">a Paragraph</param>
         /// <param name="numberDepth">the numberDepth</param>
-        protected internal Section(Paragraph title, int numberDepth) {
+        protected internal Section(Paragraph title, int numberDepth)
+        {
             this.numberDepth = numberDepth;
             this.title = title;
         }
-    
+
         // private methods
-    
+
         /// <summary>
         /// Sets the number of this section.
         /// </summary>
         /// <param name="number">the number of this section</param>
         /// <param name="numbers">an ArrayList, containing the numbers of the Parent</param>
-        private void SetNumbers(int number, ArrayList numbers) {
+        private void SetNumbers(int number, ArrayList numbers)
+        {
             this.numbers = new ArrayList();
             this.numbers.Add(number);
             this.numbers.AddRange(numbers);
         }
-    
+
         // implementation of the Element-methods
-    
+
         /// <summary>
         /// Processes the element by adding it (or the different parts) to an
         /// IElementListener.
         /// </summary>
         /// <param name="listener">the IElementListener</param>
         /// <returns>true if the element was processed successfully</returns>
-        public bool Process(IElementListener listener) {
-            try {
-                foreach (IElement ele in this) {
+        public bool Process(IElementListener listener)
+        {
+            try
+            {
+                foreach (IElement ele in this)
+                {
                     listener.Add(ele);
                 }
                 return true;
             }
-            catch (DocumentException) {
+            catch (DocumentException)
+            {
                 return false;
             }
         }
-    
+
         /// <summary>
         /// Gets the type of the text element.
         /// </summary>
         /// <value>a type</value>
-        public virtual int Type {
-            get {
+        public virtual int Type
+        {
+            get
+            {
                 return Element.SECTION;
             }
         }
-    
+
         /// <summary>
         /// Gets all the chunks in this element.
         /// </summary>
         /// <value>an ArrayList</value>
-        public ArrayList Chunks {
-            get {
+        public ArrayList Chunks
+        {
+            get
+            {
                 ArrayList tmp = new ArrayList();
-                foreach (IElement ele in this) {
+                foreach (IElement ele in this)
+                {
                     tmp.AddRange(ele.Chunks);
                 }
                 return tmp;
             }
         }
-    
+
         /**
         * @see com.lowagie.text.Element#isContent()
         * @since   iText 2.0.8
         */
-        public bool IsContent() {
+        public bool IsContent()
+        {
             return true;
         }
 
@@ -244,86 +259,102 @@ namespace RazorPDF.Legacy.Text{
         * @see com.lowagie.text.Element#isNestable()
         * @since   iText 2.0.8
         */
-        public virtual bool IsNestable() {
+        public virtual bool IsNestable()
+        {
             return false;
         }
-        
+
         // overriding some of the ArrayList-methods
-    
+
         /// <summary>
         /// Adds a Paragraph, List or Table
         /// to this Section.
         /// </summary>
         /// <param name="index">index at which the specified element is to be inserted</param>
         /// <param name="o">an object of type Paragraph, List or Table</param>
-        public void Add(int index, Object o) {
-            if (AddedCompletely) {
+        public void Add(int index, Object o)
+        {
+            if (AddedCompletely)
+            {
                 throw new InvalidOperationException("This LargeElement has already been added to the Document.");
             }
-            try {
-                IElement element = (IElement) o;
-                if (element.IsNestable()) {
+            try
+            {
+                IElement element = (IElement)o;
+                if (element.IsNestable())
+                {
                     base.Insert(index, element);
                 }
-                else {
+                else
+                {
                     throw new Exception(element.Type.ToString());
                 }
             }
-            catch (Exception cce) {
+            catch (Exception cce)
+            {
                 throw new Exception("Insertion of illegal Element: " + cce.Message);
             }
         }
-    
+
         /// <summary>
         /// Adds a Paragraph, List, Table or another Section
         /// to this Section.
         /// </summary>
         /// <param name="o">an object of type Paragraph, List, Table or another Section</param>
         /// <returns>a bool</returns>
-        public new bool Add(Object o) {
-            try {
-                IElement element = (IElement) o;
-                if (element.Type == Element.SECTION) {
-                    Section section = (Section) o;
+        public new bool Add(Object o)
+        {
+            try
+            {
+                IElement element = (IElement)o;
+                if (element.Type == Element.SECTION)
+                {
+                    Section section = (Section)o;
                     section.SetNumbers(++subsections, numbers);
                     base.Add(section);
                     return true;
                 }
-                else if (o is MarkedSection && ((MarkedObject)o).element.Type == Element.SECTION) {
+                else if (o is MarkedSection && ((MarkedObject)o).element.Type == Element.SECTION)
+                {
                     MarkedSection mo = (MarkedSection)o;
                     Section section = (Section)(mo.element);
                     section.SetNumbers(++subsections, numbers);
                     base.Add(mo);
                     return true;
                 }
-                else if (element.IsNestable()) {
+                else if (element.IsNestable())
+                {
                     base.Add(o);
                     return true;
                 }
-                else {
+                else
+                {
                     throw new Exception(element.Type.ToString());
                 }
             }
-            catch (Exception cce) {
+            catch (Exception cce)
+            {
                 throw new Exception("Insertion of illegal Element: " + cce.Message);
             }
         }
-    
+
         /// <summary>
         /// Adds a collection of Elements
         /// to this Section.
         /// </summary>
         /// <param name="collection">a collection of Paragraphs, Lists and/or Tables</param>
         /// <returns>true if the action succeeded, false if not.</returns>
-        public bool AddAll(ICollection collection) {
-            foreach (object itm in collection) {
+        public bool AddAll(ICollection collection)
+        {
+            foreach (object itm in collection)
+            {
                 this.Add(itm);
             }
             return true;
         }
-    
+
         // methods that return a Section
-    
+
         /// <summary>
         /// Creates a Section, adds it to this Section and returns it.
         /// </summary>
@@ -331,8 +362,10 @@ namespace RazorPDF.Legacy.Text{
         /// <param name="title">the title of the new section</param>
         /// <param name="numberDepth">the numberDepth of the section</param>
         /// <returns>the newly added Section</returns>
-        public virtual Section AddSection(float indentation, Paragraph title, int numberDepth) {
-            if (AddedCompletely) {
+        public virtual Section AddSection(float indentation, Paragraph title, int numberDepth)
+        {
+            if (AddedCompletely)
+            {
                 throw new InvalidOperationException("This LargeElement has already been added to the Document.");
             }
             Section section = new Section(title, numberDepth);
@@ -340,31 +373,34 @@ namespace RazorPDF.Legacy.Text{
             Add(section);
             return section;
         }
-    
+
         /// <summary>
         /// Creates a Section, adds it to this Section and returns it.
         /// </summary>
         /// <param name="indentation">the indentation of the new section</param>
         /// <param name="title">the title of the new section</param>
         /// <returns>the newly added Section</returns>
-        public virtual Section AddSection(float indentation, Paragraph title) {
+        public virtual Section AddSection(float indentation, Paragraph title)
+        {
             return AddSection(indentation, title, numberDepth + 1);
         }
-    
+
         /// <summary>
         /// Creates a Section, add it to this Section and returns it.
         /// </summary>
         /// <param name="title">the title of the new section</param>
         /// <param name="numberDepth">the numberDepth of the section</param>
         /// <returns>the newly added Section</returns>
-        public virtual Section AddSection(Paragraph title, int numberDepth) {
+        public virtual Section AddSection(Paragraph title, int numberDepth)
+        {
             return AddSection(0, title, numberDepth);
         }
-    
+
         /**
         * Adds a marked section. For use in class MarkedSection only!
         */
-        public MarkedSection AddMarkedSection() {
+        public MarkedSection AddMarkedSection()
+        {
             MarkedSection section = new MarkedSection(new Section(null, numberDepth + 1));
             Add(section);
             return section;
@@ -375,10 +411,11 @@ namespace RazorPDF.Legacy.Text{
         /// </summary>
         /// <param name="title">the title of the new section</param>
         /// <returns>the newly added Section</returns>
-        public virtual Section AddSection(Paragraph title) {
+        public virtual Section AddSection(Paragraph title)
+        {
             return AddSection(0, title, numberDepth + 1);
         }
-    
+
         /**
          * Adds a Section to this Section and returns it.
          *
@@ -393,10 +430,11 @@ namespace RazorPDF.Legacy.Text{
         /// <param name="title">the title of the new section</param>
         /// <param name="numberDepth">the numberDepth of the section</param>
         /// <returns>the newly added Section</returns>
-        public virtual Section AddSection(float indentation, string title, int numberDepth) {
+        public virtual Section AddSection(float indentation, string title, int numberDepth)
+        {
             return AddSection(indentation, new Paragraph(title), numberDepth);
         }
-    
+
         /**
          * Adds a Section to this Section and returns it.
          *
@@ -409,61 +447,72 @@ namespace RazorPDF.Legacy.Text{
         /// <param name="title">the title of the new section</param>
         /// <param name="numberDepth">the numberDepth of the section</param>
         /// <returns>the newly added Section</returns>
-        public virtual Section AddSection(string title, int numberDepth) {
+        public virtual Section AddSection(string title, int numberDepth)
+        {
             return AddSection(new Paragraph(title), numberDepth);
         }
-    
+
         /// <summary>
         /// Adds a Section to this Section and returns it.
         /// </summary>
         /// <param name="indentation">the indentation of the new section</param>
         /// <param name="title">the title of the new section</param>
         /// <returns>the newly added Section</returns>
-        public virtual Section AddSection(float indentation, string title) {
+        public virtual Section AddSection(float indentation, string title)
+        {
             return AddSection(indentation, new Paragraph(title));
         }
-    
+
         /// <summary>
         /// Adds a Section to this Section and returns it.
         /// </summary>
         /// <param name="title">the title of the new section</param>
         /// <returns>the newly added Section</returns>
-        public virtual Section AddSection(string title) {
+        public virtual Section AddSection(string title)
+        {
             return AddSection(new Paragraph(title));
         }
-    
+
         // public methods
-    
+
         /// <summary>
         /// Alters the attributes of this Section.
         /// </summary>
         /// <param name="attributes">the attributes</param>
-        public void Set(Properties attributes) {
+        public void Set(TagProperties attributes)
+        {
             string value;
-            if ((value = attributes.Remove(ElementTags.NUMBERDEPTH)) != null) {
+            if ((value = attributes.Remove(ElementTags.NUMBERDEPTH)) != null)
+            {
                 NumberDepth = int.Parse(value);
             }
-            if ((value = attributes.Remove(ElementTags.INDENT)) != null) {
+            if ((value = attributes.Remove(ElementTags.INDENT)) != null)
+            {
                 Indentation = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
-            if ((value = attributes.Remove(ElementTags.INDENTATIONLEFT)) != null) {
+            if ((value = attributes.Remove(ElementTags.INDENTATIONLEFT)) != null)
+            {
                 IndentationLeft = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
-            if ((value = attributes.Remove(ElementTags.INDENTATIONRIGHT)) != null) {
+            if ((value = attributes.Remove(ElementTags.INDENTATIONRIGHT)) != null)
+            {
                 IndentationRight = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
         }
-    
+
         /// <summary>
         /// Get/set the title of this section
         /// </summary>
         /// <value>a Paragraph</value>
-        public Paragraph Title {
-            get {
+        public Paragraph Title
+        {
+            get
+            {
                 return ConstructTitle(title, numbers, numberDepth, numberStyle);
             }
-            
-            set {
+
+            set
+            {
                 this.title = value;
             }
         }
@@ -474,15 +523,18 @@ namespace RazorPDF.Legacy.Text{
         * or NUMBERSTYLE_DOTTED_WITHOUT_FINAL_DOT: 1.2.3
         * @since    iText 2.0.8
         */
-        public int NumberStyle {
-            set {
+        public int NumberStyle
+        {
+            set
+            {
                 numberStyle = value;
             }
-            get {
+            get
+            {
                 return numberStyle;
             }
         }
-        
+
         /**
         * Constructs a Paragraph that will be used as title for a Section or Chapter.
         * @param    title   the title of the section
@@ -492,20 +544,25 @@ namespace RazorPDF.Legacy.Text{
         * @return   a Paragraph object
         * @since    iText 2.0.8
         */
-        public static Paragraph ConstructTitle(Paragraph title, ArrayList numbers, int numberDepth, int numberStyle) {
-            if (title == null) {
+        public static Paragraph ConstructTitle(Paragraph title, ArrayList numbers, int numberDepth, int numberStyle)
+        {
+            if (title == null)
+            {
                 return null;
             }
             int depth = Math.Min(numbers.Count, numberDepth);
-            if (depth < 1) {
+            if (depth < 1)
+            {
                 return title;
             }
             StringBuilder buf = new StringBuilder(" ");
-            for (int i = 0; i < depth; i++) {
+            for (int i = 0; i < depth; i++)
+            {
                 buf.Insert(0, ".");
                 buf.Insert(0, (int)numbers[i]);
             }
-            if (numberStyle == NUMBERSTYLE_DOTTED_WITHOUT_FINAL_DOT) {
+            if (numberStyle == NUMBERSTYLE_DOTTED_WITHOUT_FINAL_DOT)
+            {
                 buf.Remove(buf.Length - 2, 1);
             }
             Paragraph result = new Paragraph(title);
@@ -514,7 +571,7 @@ namespace RazorPDF.Legacy.Text{
         }
 
         // methods to retrieve information
-    
+
         /// <summary>
         /// Checks if this object is a Chapter.
         /// </summary>
@@ -522,10 +579,11 @@ namespace RazorPDF.Legacy.Text{
         /// true if it is a Chapter,
         /// false if it is a Section
         /// </returns>
-        public bool IsChapter() {
+        public bool IsChapter()
+        {
             return Type == Element.CHAPTER;
         }
-    
+
         /// <summary>
         /// Checks if this object is a Section.
         /// </summary>
@@ -533,104 +591,124 @@ namespace RazorPDF.Legacy.Text{
         /// true if it is a Section,
         /// false if it is a Chapter.
         /// </returns>
-        public bool IsSection() {
+        public bool IsSection()
+        {
             return Type == Element.SECTION;
         }
-    
+
         /// <summary>
         /// Get/set the numberdepth of this Section.
         /// </summary>
         /// <value>a int</value>
-        public int NumberDepth {
-            get {
+        public int NumberDepth
+        {
+            get
+            {
                 return numberDepth;
             }
 
-            set {
+            set
+            {
                 this.numberDepth = value;
             }
         }
-    
+
         /// <summary>
         /// Get/set the indentation of this Section on the left side.
         /// </summary>
         /// <value>the indentation</value>
-        public float IndentationLeft {
-            get {
+        public float IndentationLeft
+        {
+            get
+            {
                 return indentationLeft;
             }
 
-            set {
+            set
+            {
                 indentationLeft = value;
             }
         }
-    
+
         /// <summary>
         /// Get/set the indentation of this Section on the right side.
         /// </summary>
         /// <value>the indentation</value>
-        public float IndentationRight {
-            get {
+        public float IndentationRight
+        {
+            get
+            {
                 return indentationRight;
             }
 
-            set {
+            set
+            {
                 indentationRight = value;
             }
         }
-    
+
         /// <summary>
         /// Get/set the indentation of the content of this Section.
         /// </summary>
         /// <value>the indentation</value>
-        public float Indentation {
-            get {
+        public float Indentation
+        {
+            get
+            {
                 return indentation;
             }
 
-            set {
+            set
+            {
                 indentation = value;
             }
         }
-    
+
         /// <summary>
         /// Returns the depth of this section.
         /// </summary>
         /// <value>the depth</value>
-        public int Depth {
-            get {
+        public int Depth
+        {
+            get
+            {
                 return numbers.Count;
             }
         }
-    
+
         /// <summary>
         /// Checks if a given tag corresponds with a title tag for this object.
         /// </summary>
         /// <param name="tag">the given tag</param>
         /// <returns>true if the tag corresponds</returns>
-        public static bool IsTitle(string tag) {
+        public static bool IsTitle(string tag)
+        {
             return ElementTags.TITLE.Equals(tag);
         }
-    
+
         /// <summary>
         /// Checks if a given tag corresponds with this object.
         /// </summary>
         /// <param name="tag">the given tag</param>
         /// <returns>true if the tag corresponds</returns>
-        public static bool IsTag(string tag) {
+        public static bool IsTag(string tag)
+        {
             return ElementTags.SECTION.Equals(tag);
         }
-    
+
         /// <summary>
         /// Get/set the bookmark
         /// </summary>
         /// <value>a bool</value>
-        public bool BookmarkOpen {
-            get {
+        public bool BookmarkOpen
+        {
+            get
+            {
                 return bookmarkOpen;
             }
 
-            set {
+            set
+            {
                 this.bookmarkOpen = value;
             }
         }
@@ -638,34 +716,41 @@ namespace RazorPDF.Legacy.Text{
         /**
         * Gets the bookmark title.
         * @return the bookmark title
-        */    
-        public Paragraph GetBookmarkTitle() {
+        */
+        public Paragraph GetBookmarkTitle()
+        {
             if (bookmarkTitle == null)
                 return Title;
             else
                 return new Paragraph(bookmarkTitle);
         }
-        
+
         /**
         * Sets the bookmark title. The bookmark title is the same as the section title but
         * can be changed with this method.
         * @param bookmarkTitle the bookmark title
-        */    
-        public String BookmarkTitle {
-            set {
+        */
+        public String BookmarkTitle
+        {
+            set
+            {
                 this.bookmarkTitle = value;
             }
         }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return base.ToString();
         }
 
-        public virtual bool TriggerNewPage {
-            get {
+        public virtual bool TriggerNewPage
+        {
+            get
+            {
                 return triggerNewPage && notAddedYet;
             }
-            set {
+            set
+            {
                 triggerNewPage = value;
             }
         }
@@ -673,10 +758,13 @@ namespace RazorPDF.Legacy.Text{
         /**
         * Changes the Chapter number.
         */
-        public void SetChapterNumber(int number) {
+        public void SetChapterNumber(int number)
+        {
             numbers[numbers.Count - 1] = number;
-            foreach (Object s in this) {
-                if (s is Section) {
+            foreach (Object s in this)
+            {
+                if (s is Section)
+                {
                     ((Section)s).SetChapterNumber(number);
                 }
             }
@@ -687,11 +775,14 @@ namespace RazorPDF.Legacy.Text{
         * @since   iText2.0.8
         * @return  true if the section wasn't added yet
         */
-        public bool NotAddedYet {
-            get {
+        public bool NotAddedYet
+        {
+            get
+            {
                 return notAddedYet;
             }
-            set {
+            set
+            {
                 notAddedYet = value;
             }
         }
@@ -700,31 +791,39 @@ namespace RazorPDF.Legacy.Text{
         * @see com.lowagie.text.LargeElement#isAddedCompletely()
         * @since   iText 2.0.8
         */
-        protected bool AddedCompletely {
-            get {
+        protected bool AddedCompletely
+        {
+            get
+            {
                 return addedCompletely;
             }
-            set {
+            set
+            {
                 addedCompletely = value;
             }
         }
-        
+
         /**
         * @since   iText 2.0.8
         * @see com.lowagie.text.LargeElement#flushContent()
         */
-        public void FlushContent() {
+        public void FlushContent()
+        {
             NotAddedYet = false;
             title = null;
-            for (int k = 0; k < Count; ++k) {
+            for (int k = 0; k < Count; ++k)
+            {
                 IElement element = (IElement)this[k];
-                if (element is Section) {
+                if (element is Section)
+                {
                     Section s = (Section)element;
-                    if (!s.ElementComplete && Count == 1) {
+                    if (!s.ElementComplete && Count == 1)
+                    {
                         s.FlushContent();
                         return;
                     }
-                    else {
+                    else
+                    {
                         s.AddedCompletely = true;
                     }
                 }
@@ -737,11 +836,14 @@ namespace RazorPDF.Legacy.Text{
         * @since   iText 2.0.8
         * @see com.lowagie.text.LargeElement#isComplete()
         */
-        public bool ElementComplete {
-            get {
+        public bool ElementComplete
+        {
+            get
+            {
                 return complete;
             }
-            set {
+            set
+            {
                 complete = value;
             }
         }
@@ -750,7 +852,8 @@ namespace RazorPDF.Legacy.Text{
         * Adds a new page to the section.
         * @since   2.1.1
         */
-        public void NewPage() {
+        public void NewPage()
+        {
             this.Add(Chunk.NEXTPAGE);
         }
     }

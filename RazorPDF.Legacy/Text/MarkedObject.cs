@@ -50,9 +50,9 @@ using System.Collections;
  * http://www.lowagie.com/iText/
  */
 using RazorPDF.Legacy.Misc.Util;
-using RazorPDF.Legacy.Misc.Util;
 
-namespace RazorPDF.Legacy.Text{
+namespace RazorPDF.Legacy.Text
+{
 
     /**
     * Wrapper that allows to add properties to 'basic building block' objects.
@@ -62,35 +62,40 @@ namespace RazorPDF.Legacy.Text{
     * the MarkedObject functionality.
     */
 
-    public class MarkedObject : IElement {
+    public class MarkedObject : IElement
+    {
 
         /** The element that is wrapped in a MarkedObject. */
         protected internal IElement element;
 
         /** Contains extra markupAttributes */
-        protected internal Properties markupAttributes = new Properties();
-            
+        protected internal TagProperties markupAttributes = new TagProperties();
+
         /**
         * This constructor is for internal use only.
         */
-        protected MarkedObject() {
+        protected MarkedObject()
+        {
             element = null;
         }
-        
+
         /**
         * Creates a MarkedObject.
         */
-        public MarkedObject(IElement element) {
+        public MarkedObject(IElement element)
+        {
             this.element = element;
         }
-        
+
         /**
         * Gets all the chunks in this element.
         *
         * @return  an <CODE>ArrayList</CODE>
         */
-        public virtual ArrayList Chunks {
-            get {
+        public virtual ArrayList Chunks
+        {
+            get
+            {
                 return element.Chunks;
             }
         }
@@ -102,22 +107,27 @@ namespace RazorPDF.Legacy.Text{
         * @param       listener        an <CODE>ElementListener</CODE>
         * @return <CODE>true</CODE> if the element was processed successfully
         */
-        public virtual bool Process(IElementListener listener) {
-            try {
+        public virtual bool Process(IElementListener listener)
+        {
+            try
+            {
                 return listener.Add(element);
             }
-            catch (DocumentException) {
+            catch (DocumentException)
+            {
                 return false;
             }
         }
-        
+
         /**
         * Gets the type of the text element.
         *
         * @return  a type
         */
-        public virtual int Type {
-            get {
+        public virtual int Type
+        {
+            get
+            {
                 return Element.MARKED;
             }
         }
@@ -126,7 +136,8 @@ namespace RazorPDF.Legacy.Text{
         * @see com.lowagie.text.Element#isContent()
         * @since   iText 2.0.8
         */
-        public bool IsContent() {
+        public bool IsContent()
+        {
             return true;
         }
 
@@ -134,20 +145,24 @@ namespace RazorPDF.Legacy.Text{
         * @see com.lowagie.text.Element#isNestable()
         * @since   iText 2.0.8
         */
-        public bool IsNestable() {
+        public bool IsNestable()
+        {
             return true;
         }
 
         /**
         * @return the markupAttributes
         */
-        public virtual Properties MarkupAttributes {
-            get {
+        public virtual TagProperties MarkupAttributes
+        {
+            get
+            {
                 return markupAttributes;
             }
         }
-        
-        public virtual void SetMarkupAttribute(String key, String value) {
+
+        public virtual void SetMarkupAttribute(String key, String value)
+        {
             markupAttributes.Add(key, value);
         }
 

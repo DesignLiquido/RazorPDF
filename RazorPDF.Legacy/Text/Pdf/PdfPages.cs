@@ -51,7 +51,8 @@ using System.IO;
  * http://www.lowagie.com/iText/
  */
 
-namespace RazorPDF.Legacy.Text.Pdf {
+namespace RazorPDF.Legacy.Text.Pdf
+{
     /**
     * <CODE>PdfPages</CODE> is the PDF Pages-object.
     * <P>
@@ -64,25 +65,28 @@ namespace RazorPDF.Legacy.Text.Pdf {
     * @see        PdfPage
     */
 
-    public class PdfPages {
-        
+    public class PdfPages
+    {
+
         private ArrayList pages = new ArrayList();
         private ArrayList parents = new ArrayList();
         private int leafSize = 10;
         private PdfWriter writer;
         private PdfIndirectReference topParent;
-        
+
         // constructors
-        
-    /**
-    * Constructs a <CODE>PdfPages</CODE>-object.
-    */
-        
-        internal PdfPages(PdfWriter writer) {
+
+        /**
+        * Constructs a <CODE>PdfPages</CODE>-object.
+        */
+
+        internal PdfPages(PdfWriter writer)
+        {
             this.writer = writer;
         }
-        
-        internal void AddPage(PdfDictionary page) {
+
+        internal void AddPage(PdfDictionary page)
+        {
             if ((pages.Count % leafSize) == 0)
                 parents.Add(writer.PdfIndirectReference);
             PdfIndirectReference parent = (PdfIndirectReference)parents[parents.Count - 1];
@@ -91,32 +95,37 @@ namespace RazorPDF.Legacy.Text.Pdf {
             writer.AddToBody(page, current);
             pages.Add(current);
         }
-        
-        internal PdfIndirectReference AddPageRef(PdfIndirectReference pageRef) {
+
+        internal PdfIndirectReference AddPageRef(PdfIndirectReference pageRef)
+        {
             if ((pages.Count % leafSize) == 0)
                 parents.Add(writer.PdfIndirectReference);
             pages.Add(pageRef);
             return (PdfIndirectReference)parents[parents.Count - 1];
         }
-        
+
         // returns the top parent to include in the catalog
-        internal PdfIndirectReference WritePageTree() {
+        internal PdfIndirectReference WritePageTree()
+        {
             if (pages.Count == 0)
                 throw new IOException("The document has no pages.");
             int leaf = 1;
             ArrayList tParents = parents;
             ArrayList tPages = pages;
             ArrayList nextParents = new ArrayList();
-            while (true) {
+            while (true)
+            {
                 leaf *= leafSize;
                 int stdCount = leafSize;
                 int rightCount = tPages.Count % leafSize;
                 if (rightCount == 0)
                     rightCount = leafSize;
-                for (int p = 0; p < tParents.Count; ++p) {
+                for (int p = 0; p < tParents.Count; ++p)
+                {
                     int count;
                     int thisLeaf = leaf;
-                    if (p == tParents.Count - 1) {
+                    if (p == tParents.Count - 1)
+                    {
                         count = rightCount;
                         thisLeaf = pages.Count % leaf;
                         if (thisLeaf == 0)
@@ -130,17 +139,20 @@ namespace RazorPDF.Legacy.Text.Pdf {
                     ArrayList intern = kids.ArrayList;
                     intern.AddRange(tPages.GetRange(p * stdCount, count));
                     top.Put(PdfName.KIDS, kids);
-                    if (tParents.Count > 1) {
+                    if (tParents.Count > 1)
+                    {
                         if ((p % leafSize) == 0)
                             nextParents.Add(writer.PdfIndirectReference);
                         top.Put(PdfName.PARENT, (PdfIndirectReference)nextParents[p / leafSize]);
                     }
-                    else {
+                    else
+                    {
                         top.Put(PdfName.ITXT, new PdfString(Document.Release));
                     }
                     writer.AddToBody(top, (PdfIndirectReference)tParents[p]);
                 }
-                if (tParents.Count == 1) {
+                if (tParents.Count == 1)
+                {
                     topParent = (PdfIndirectReference)tParents[0];
                     return topParent;
                 }
@@ -149,17 +161,21 @@ namespace RazorPDF.Legacy.Text.Pdf {
                 nextParents = new ArrayList();
             }
         }
-        
-        internal PdfIndirectReference TopParent {
-            get {
+
+        internal PdfIndirectReference TopParent
+        {
+            get
+            {
                 return topParent;
             }
         }
-        
-        internal void SetLinearMode(PdfIndirectReference topParent) {
+
+        internal void SetLinearMode(PdfIndirectReference topParent)
+        {
             if (parents.Count > 1)
                 throw new Exception("Linear page mode can only be called with a single parent.");
-            if (topParent != null) {
+            if (topParent != null)
+            {
                 this.topParent = topParent;
                 parents.Clear();
                 parents.Add(topParent);
@@ -167,11 +183,13 @@ namespace RazorPDF.Legacy.Text.Pdf {
             leafSize = 10000000;
         }
 
-        internal void AddPage(PdfIndirectReference page) {
+        internal void AddPage(PdfIndirectReference page)
+        {
             pages.Add(page);
         }
 
-        internal int ReorderPages(int[] order) {
+        internal int ReorderPages(int[] order)
+        {
             if (order == null)
                 return pages.Count;
             if (parents.Count > 1)
@@ -180,7 +198,8 @@ namespace RazorPDF.Legacy.Text.Pdf {
                 throw new DocumentException("Page reordering requires an array with the same size as the number of pages.");
             int max = pages.Count;
             bool[] temp = new bool[max];
-            for (int k = 0; k < max; ++k) {
+            for (int k = 0; k < max; ++k)
+            {
                 int p = order[k];
                 if (p < 1 || p > max)
                     throw new DocumentException("Page reordering requires pages between 1 and " + max + ". Found " + p + ".");
@@ -189,7 +208,8 @@ namespace RazorPDF.Legacy.Text.Pdf {
                 temp[p - 1] = true;
             }
             Object[] copy = pages.ToArray();
-            for (int k = 0; k < max; ++k) {
+            for (int k = 0; k < max; ++k)
+            {
                 pages[k] = copy[order[k] - 1];
             }
             return max;

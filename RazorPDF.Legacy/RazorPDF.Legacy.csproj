@@ -46,13 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Misc\Drawing\Dimension.cs" />
     <Compile Include="Misc\Drawing\Dimension2D.cs" />
     <Compile Include="Misc\Util\Collections\OrderedTree.cs" />
     <Compile Include="Misc\Util\ListIterator.cs" />
-    <Compile Include="Misc\Util\Properties.cs" />
+    <Compile Include="Misc\Util\TagProperties.cs" />
     <Compile Include="Misc\Util\StringTokenizer.cs" />
     <Compile Include="Misc\Util\Util.cs" />
     <Compile Include="Misc\Util\Zlib\Adler32.cs" />
@@ -67,6 +66,11 @@
     <Compile Include="Misc\Util\Zlib\ZDeflaterOutputStream.cs" />
     <Compile Include="Misc\Util\Zlib\ZInflaterInputStream.cs" />
     <Compile Include="Misc\Util\Zlib\ZStream.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Text\Anchor.cs" />
     <Compile Include="Text\Annotation.cs" />
     <Compile Include="Text\BadElementException.cs" />
@@ -494,24 +498,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Text\Pdf\Fonts\Courier-Bold.afm" />
-    <None Include="Text\Pdf\Fonts\Courier-BoldOblique.afm" />
-    <None Include="Text\Pdf\Fonts\Courier-Oblique.afm" />
-    <None Include="Text\Pdf\Fonts\Courier.afm" />
-    <None Include="Text\Pdf\Fonts\Helvetica-Bold.afm" />
-    <None Include="Text\Pdf\Fonts\Helvetica-BoldOblique.afm" />
-    <None Include="Text\Pdf\Fonts\Helvetica-Oblique.afm" />
-    <None Include="Text\Pdf\Fonts\Helvetica.afm" />
-    <None Include="Text\Pdf\Fonts\Symbol.afm" />
-    <None Include="Text\Pdf\Fonts\Times-Bold.afm" />
-    <None Include="Text\Pdf\Fonts\Times-BoldItalic.afm" />
-    <None Include="Text\Pdf\Fonts\Times-Italic.afm" />
-    <None Include="Text\Pdf\Fonts\Times-Roman.afm" />
-    <None Include="Text\Pdf\Fonts\ZapfDingbats.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Courier-Bold.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Courier-BoldOblique.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Courier-Oblique.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Courier.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Helvetica-Bold.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Helvetica-BoldOblique.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Helvetica-Oblique.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Helvetica.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Symbol.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Times-Bold.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Times-BoldItalic.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Times-Italic.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\Times-Roman.afm" />
+    <EmbeddedResource Include="Text\Pdf\Fonts\ZapfDingbats.afm" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Text\Pdf\Fonts\glyphlist.txt" />
     <Content Include="Text\Pdf\Fonts\mustRead.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -20,6 +20,8 @@ using System.Xml;
 using RazorPDF.Legacy.Text;
 using RazorPDF.Legacy.Text.Html.SimpleParser;
 using RazorPDF.Legacy.Text.Pdf;
+using RazorPDF.Legacy.Text.Xml;
+using RazorPDF.Legacy.Text.Html;
 
 namespace RazorPDF
 {
@@ -35,7 +37,7 @@ namespace RazorPDF
         public void Render(ViewContext viewContext, TextWriter writer)
         {
             // generate view into string
-            var sb = new System.Text.StringBuilder();
+            /* var sb = new System.Text.StringBuilder();
             TextWriter tw = new System.IO.StringWriter(sb);
             _result.View.Render(viewContext, tw);
             var resultCache = sb.ToString();
@@ -49,7 +51,6 @@ namespace RazorPDF
 
             pdfWriter.CloseStream = false;
 
-
             worker.Parse(new StringReader(resultCache));
             worker.EndDocument();
             worker.Close();
@@ -61,7 +62,47 @@ namespace RazorPDF
             pdfWriter.Flush();
             pdfWriter.Close();
 
-            viewContext.HttpContext.Response.BinaryWrite(ms.ToArray());
+            viewContext.HttpContext.Response.BinaryWrite(ms.ToArray()); */
+            // generate view into string
+            var sb = new System.Text.StringBuilder();
+            TextWriter tw = new System.IO.StringWriter(sb);
+            _result.View.Render(viewContext, tw);
+            var resultCache = sb.ToString();
+
+            // detect itext (or html) format of response
+            XmlParser parser;
+            using (var reader = GetXmlReader(resultCache.Replace("\r", "").Replace("\n", "")))
+            {
+                while (reader.Read() && reader.NodeType != XmlNodeType.Element)
+                {
+                    // no-op
+                }
+
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "itext")
+                    parser = new XmlParser();
+                else
+                    parser = new HtmlParser();
+            }
+
+            // Create a document processing context
+            var document = new Document();
+            document.Open();
+
+            // associate output with response stream
+            var pdfWriter = PdfWriter.GetInstance(document, viewContext.HttpContext.Response.OutputStream);
+            pdfWriter.CloseStream = false;
+
+            // this is as close as we can get to being "success" before writing output
+            // so set the content type now
+            viewContext.HttpContext.Response.ContentType = "application/pdf";
+
+            // parse memory through document into output
+            using (var reader = GetXmlReader(resultCache))
+            {
+                parser.Go(document, reader);
+            }
+
+            pdfWriter.Close();
         }
 
 

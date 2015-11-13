@@ -1,4 +1,5 @@
 ﻿@model List<RazorPDFExample.Models.Person>
+
 @{
     Layout = "~/Views/Shared/_PdfLayout.cshtml";
 }
@@ -37,7 +38,9 @@
         <cell borderwidth="0.5" left="false" right="false" top="true" bottom="false" horizontalalign="right">@Model.Count.ToString()</cell>
     </row>
 </table>
+
 <newline />
+
 <paragraph leading="14.0" font="unknown" align="Default">
     You can also add images.
 </paragraph>

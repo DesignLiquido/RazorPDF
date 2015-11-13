@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Globalization;
 using RazorPDF.Legacy.Misc.Util;
-using RazorPDF.Legacy.Misc.Util;
 using RazorPDF.Legacy.Text.Xml;
 using RazorPDF.Legacy.Text.Pdf;
 
@@ -56,93 +55,111 @@ using RazorPDF.Legacy.Text.Pdf;
  * http://www.lowagie.com/iText/
  */
 
-namespace RazorPDF.Legacy.Text.Html {
+namespace RazorPDF.Legacy.Text.Html
+{
 
     /**
     * The <CODE>Tags</CODE>-class maps several XHTML-tags to iText-objects.
     */
 
-    public class ITextmyHtmlHandler : ITextHandler {
-        
-    /** These are the properties of the body section. */
-        private Properties bodyAttributes = new Properties();
-        
-    /** This is the status of the table border. */
+    public class ITextmyHtmlHandler : ITextHandler
+    {
+
+        /** These are the properties of the body section. */
+        private TagProperties bodyAttributes = new TagProperties();
+
+        /** This is the status of the table border. */
         private bool tableBorder = false;
-        
-    /**
-    * Constructs a new SAXiTextHandler that will translate all the events
-    * triggered by the parser to actions on the <CODE>Document</CODE>-object.
-    *
-    * @param   document    this is the document on which events must be triggered
-    */
-        
-        public ITextmyHtmlHandler(IDocListener document) : base(document, new HtmlTagMap()) {
-        }
-        
-        public ITextmyHtmlHandler(IDocListener document, BaseFont bf) : base(document, new HtmlTagMap(), bf) {
+
+        /**
+        * Constructs a new SAXiTextHandler that will translate all the events
+        * triggered by the parser to actions on the <CODE>Document</CODE>-object.
+        *
+        * @param   document    this is the document on which events must be triggered
+        */
+
+        public ITextmyHtmlHandler(IDocListener document)
+            : base(document, new HtmlTagMap())
+        {
         }
 
-    /**
-    * Constructs a new SAXiTextHandler that will translate all the events
-    * triggered by the parser to actions on the <CODE>Document</CODE>-object.
-    *
-    * @param   document    this is the document on which events must be triggered
-    * @param htmlTags a tagmap translating HTML tags to iText tags
-    */
-        
-        public ITextmyHtmlHandler(IDocListener document, Hashtable htmlTags) : base(document, htmlTags) {
+        public ITextmyHtmlHandler(IDocListener document, BaseFont bf)
+            : base(document, new HtmlTagMap(), bf)
+        {
         }
-        
-    /**
-    * This method gets called when a start tag is encountered.
-    *
-    * @param   uri         the Uniform Resource Identifier
-    * @param   lname       the local name (without prefix), or the empty string if Namespace processing is not being performed.
-    * @param   name        the name of the tag that is encountered
-    * @param   attrs       the list of attributes
-    */
-        
-        public override void StartElement(String uri, String lname, String name, Hashtable attrs) {
-        //System.err.Println("Start: " + name);
-            
+
+        /**
+        * Constructs a new SAXiTextHandler that will translate all the events
+        * triggered by the parser to actions on the <CODE>Document</CODE>-object.
+        *
+        * @param   document    this is the document on which events must be triggered
+        * @param htmlTags a tagmap translating HTML tags to iText tags
+        */
+
+        public ITextmyHtmlHandler(IDocListener document, Hashtable htmlTags)
+            : base(document, htmlTags)
+        {
+        }
+
+        /**
+        * This method gets called when a start tag is encountered.
+        *
+        * @param   uri         the Uniform Resource Identifier
+        * @param   lname       the local name (without prefix), or the empty string if Namespace processing is not being performed.
+        * @param   name        the name of the tag that is encountered
+        * @param   attrs       the list of attributes
+        */
+
+        public override void StartElement(String uri, String lname, String name, Hashtable attrs)
+        {
+            //System.err.Println("Start: " + name);
+
             // super.handleStartingTags is replaced with handleStartingTags
             // suggestion by Vu Ngoc Tan/Hop
             name = name.ToLower(CultureInfo.InvariantCulture);
-            if (HtmlTagMap.IsHtml(name)) {
+            if (HtmlTagMap.IsHtml(name))
+            {
                 // we do nothing
                 return;
             }
-            if (HtmlTagMap.IsHead(name)) {
+            if (HtmlTagMap.IsHead(name))
+            {
                 // we do nothing
                 return;
             }
-            if (HtmlTagMap.IsTitle(name)) {
+            if (HtmlTagMap.IsTitle(name))
+            {
                 // we do nothing
                 return;
             }
-            if (HtmlTagMap.IsMeta(name)) {
+            if (HtmlTagMap.IsMeta(name))
+            {
                 // we look if we can change the body attributes
                 String meta = null;
                 String content = null;
-                if (attrs != null) {
-                    foreach (String attribute in attrs.Keys) {
+                if (attrs != null)
+                {
+                    foreach (String attribute in attrs.Keys)
+                    {
                         if (Util.EqualsIgnoreCase(attribute, HtmlTags.CONTENT))
                             content = (String)attrs[attribute];
                         else if (Util.EqualsIgnoreCase(attribute, HtmlTags.NAME))
                             meta = (String)attrs[attribute];
                     }
                 }
-                if (meta != null && content != null) {
+                if (meta != null && content != null)
+                {
                     bodyAttributes.Add(meta, content);
                 }
                 return;
             }
-            if (HtmlTagMap.IsLink(name)) {
+            if (HtmlTagMap.IsLink(name))
+            {
                 // we do nothing for the moment, in a later version we could extract the style sheet
                 return;
             }
-            if (HtmlTagMap.IsBody(name)) {
+            if (HtmlTagMap.IsBody(name))
+            {
                 // maybe we could extract some info about the document: color, margins,...
                 // but that's for a later version...
                 XmlPeer peer = new XmlPeer(ElementTags.ITEXT, name);
@@ -154,17 +171,22 @@ namespace RazorPDF.Legacy.Text.Html {
                 HandleStartingTags(peer.Tag, bodyAttributes);
                 return;
             }
-            if (myTags.ContainsKey(name)) {
-                XmlPeer peer = (XmlPeer) myTags[name];
-                if (ElementTags.TABLE.Equals(peer.Tag) || ElementTags.CELL.Equals(peer.Tag)) {
-                    Properties p = peer.GetAttributes(attrs);
+            if (myTags.ContainsKey(name))
+            {
+                XmlPeer peer = (XmlPeer)myTags[name];
+                if (ElementTags.TABLE.Equals(peer.Tag) || ElementTags.CELL.Equals(peer.Tag))
+                {
+                    var p = peer.GetAttributes(attrs);
                     String value;
-                    if (ElementTags.TABLE.Equals(peer.Tag) && (value = p[ElementTags.BORDERWIDTH]) != null) {
-                        if (float.Parse(value, NumberFormatInfo.InvariantInfo) > 0) {
+                    if (ElementTags.TABLE.Equals(peer.Tag) && (value = p[ElementTags.BORDERWIDTH]) != null)
+                    {
+                        if (float.Parse(value, NumberFormatInfo.InvariantInfo) > 0)
+                        {
                             tableBorder = true;
                         }
                     }
-                    if (tableBorder) {
+                    if (tableBorder)
+                    {
                         p.Add(ElementTags.LEFT, "true");
                         p.Add(ElementTags.RIGHT, "true");
                         p.Add(ElementTags.TOP, "true");
@@ -176,55 +198,67 @@ namespace RazorPDF.Legacy.Text.Html {
                 HandleStartingTags(peer.Tag, peer.GetAttributes(attrs));
                 return;
             }
-            Properties attributes = new Properties();
-            if (attrs != null) {
-                foreach (String attribute in attrs.Keys) {
+            var attributes = new TagProperties();
+            if (attrs != null)
+            {
+                foreach (String attribute in attrs.Keys)
+                {
                     attributes.Add(attribute.ToLower(CultureInfo.InvariantCulture), ((String)attrs[attribute]).ToLower(CultureInfo.InvariantCulture));
                 }
             }
             HandleStartingTags(name, attributes);
         }
-        
-    /**
-    * This method gets called when an end tag is encountered.
-    *
-    * @param   uri         the Uniform Resource Identifier
-    * @param   lname       the local name (without prefix), or the empty string if Namespace processing is not being performed.
-    * @param   name        the name of the tag that ends
-    */
-        
-        public override void EndElement(String uri, String lname, String name) {
+
+        /**
+        * This method gets called when an end tag is encountered.
+        *
+        * @param   uri         the Uniform Resource Identifier
+        * @param   lname       the local name (without prefix), or the empty string if Namespace processing is not being performed.
+        * @param   name        the name of the tag that ends
+        */
+
+        public override void EndElement(String uri, String lname, String name)
+        {
             //System.err.Println("End: " + name);
             name = name.ToLower(CultureInfo.InvariantCulture);
-            if (ElementTags.PARAGRAPH.Equals(name)) {
-                document.Add((IElement) stack.Pop());
+            if (ElementTags.PARAGRAPH.Equals(name))
+            {
+                document.Add((IElement)stack.Pop());
                 return;
-            }        
-            if (HtmlTagMap.IsHead(name)) {
+            }
+            if (HtmlTagMap.IsHead(name))
+            {
                 // we do nothing
                 return;
             }
-            if (HtmlTagMap.IsTitle(name)) {
-                if (currentChunk != null) {
+            if (HtmlTagMap.IsTitle(name))
+            {
+                if (currentChunk != null)
+                {
                     bodyAttributes.Add(ElementTags.TITLE, currentChunk.Content);
                 }
                 return;
             }
-            if (HtmlTagMap.IsMeta(name)) {
+            if (HtmlTagMap.IsMeta(name))
+            {
                 // we do nothing
                 return;
             }
-            if (HtmlTagMap.IsLink(name)) {
+            if (HtmlTagMap.IsLink(name))
+            {
                 // we do nothing
                 return;
             }
-            if (HtmlTagMap.IsBody(name)) {
+            if (HtmlTagMap.IsBody(name))
+            {
                 // we do nothing
                 return;
             }
-            if (myTags.ContainsKey(name)) {
-                XmlPeer peer = (XmlPeer) myTags[name];
-                if (ElementTags.TABLE.Equals(peer.Tag)) {
+            if (myTags.ContainsKey(name))
+            {
+                XmlPeer peer = (XmlPeer)myTags[name];
+                if (ElementTags.TABLE.Equals(peer.Tag))
+                {
                     tableBorder = false;
                 }
                 base.HandleEndingTags(peer.Tag);

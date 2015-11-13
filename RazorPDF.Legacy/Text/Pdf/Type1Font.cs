@@ -54,15 +54,17 @@ using System.Collections;
 using RazorPDF.Legacy.Misc.Util;
 using RazorPDF.Legacy.Misc.Util;
 
-namespace RazorPDF.Legacy.Text.Pdf {
+namespace RazorPDF.Legacy.Text.Pdf
+{
 
     /** Reads a Type1 font
      *
      * @author Paulo Soares (psoares@consiste.pt)
      */
-    internal class Type1Font : BaseFont {
+    internal class Type1Font : BaseFont
+    {
         /** The PFB file if the input was made with a <CODE>byte</CODE> array.
-         */    
+         */
         protected byte[] pfb;
         /** The Postscript font name.
          */
@@ -128,7 +130,7 @@ namespace RazorPDF.Legacy.Text.Pdf {
         /** A variable.
          */
         private int StdVW = 80;
-    
+
         /** Represents the section CharMetrics in the AFM file. Each
         *  value of this array contains a <CODE>Object[4]</CODE> with an
         *  Integer, Integer, String and int[]. This is the code, width, name and char bbox.
@@ -151,8 +153,8 @@ namespace RazorPDF.Legacy.Text.Pdf {
         /** Types of records in a PFB file. ASCII is 1 and BINARY is 2.
          *  They have to appear in the PFB file in this sequence.
          */
-        private static readonly int[] PFB_TYPES = {1, 2, 1};
-    
+        private static readonly int[] PFB_TYPES = { 1, 2, 1 };
+
         /** Creates a new Type1 font.
          * @param ttfAfm the AFM file if the input is made with a <CODE>byte</CODE> array
          * @param pfb the PFB file if the input is made with a <CODE>byte</CODE> array
@@ -162,7 +164,8 @@ namespace RazorPDF.Legacy.Text.Pdf {
          * @throws DocumentException the AFM file is invalid
          * @throws IOException the AFM file could not be read
          */
-        internal Type1Font(string afmFile, string enc, bool emb, byte[] ttfAfm, byte[] pfb, bool forceRead) {
+        internal Type1Font(string afmFile, string enc, bool emb, byte[] ttfAfm, byte[] pfb, bool forceRead)
+        {
             if (emb && ttfAfm != null && pfb == null)
                 throw new DocumentException("Two byte arrays are needed if the Type1 font is embedded.");
             if (emb && ttfAfm != null)
@@ -173,18 +176,22 @@ namespace RazorPDF.Legacy.Text.Pdf {
             FontType = FONT_TYPE_T1;
             RandomAccessFileOrArray rf = null;
             Stream istr = null;
-            if (BuiltinFonts14.ContainsKey(afmFile)) {
+            if (BuiltinFonts14.ContainsKey(afmFile))
+            {
                 embedded = false;
                 builtinFont = true;
                 byte[] buf = new byte[1024];
-                try {
+                try
+                {
                     istr = GetResourceStream(RESOURCE_PATH + afmFile + ".afm");
-                    if (istr == null) {
+                    if (istr == null)
+                    {
                         Console.Error.WriteLine(afmFile + " not found as resource.");
                         throw new DocumentException(afmFile + " not found as resource.");
                     }
                     MemoryStream ostr = new MemoryStream();
-                    while (true) {
+                    while (true)
+                    {
                         int size = istr.Read(buf, 0, buf.Length);
                         if (size == 0)
                             break;
@@ -192,52 +199,69 @@ namespace RazorPDF.Legacy.Text.Pdf {
                     }
                     buf = ostr.ToArray();
                 }
-                finally {
-                    if (istr != null) {
-                        try {
+                finally
+                {
+                    if (istr != null)
+                    {
+                        try
+                        {
                             istr.Close();
                         }
-                        catch {
+                        catch
+                        {
                             // empty on purpose
                         }
                     }
                 }
-                try {
+                try
+                {
                     rf = new RandomAccessFileOrArray(buf);
                     Process(rf);
                 }
-                finally {
-                    if (rf != null) {
-                        try {
+                finally
+                {
+                    if (rf != null)
+                    {
+                        try
+                        {
                             rf.Close();
                         }
-                        catch {
+                        catch
+                        {
                             // empty on purpose
                         }
                     }
                 }
             }
-            else if (afmFile.ToLower(CultureInfo.InvariantCulture).EndsWith(".afm")) {
-                try {
+            else if (afmFile.ToLower(CultureInfo.InvariantCulture).EndsWith(".afm"))
+            {
+                try
+                {
                     if (ttfAfm == null)
                         rf = new RandomAccessFileOrArray(afmFile, forceRead);
                     else
                         rf = new RandomAccessFileOrArray(ttfAfm);
                     Process(rf);
                 }
-                finally {
-                    if (rf != null) {
-                        try {
+                finally
+                {
+                    if (rf != null)
+                    {
+                        try
+                        {
                             rf.Close();
                         }
-                        catch {
+                        catch
+                        {
                             // empty on purpose
                         }
                     }
                 }
             }
-            else if (afmFile.ToLower(CultureInfo.InvariantCulture).EndsWith(".pfm")) {
-                try {
+            else if (afmFile.ToLower(CultureInfo.InvariantCulture).EndsWith(".pfm"))
+            {
+                try
+                {
                     MemoryStream ba = new MemoryStream();
                     if (ttfAfm == null)
                         rf = new RandomAccessFileOrArray(afmFile, forceRead);
@@ -248,12 +272,16 @@ namespace RazorPDF.Legacy.Text.Pdf {
                     rf = new RandomAccessFileOrArray(ba.ToArray());
                     Process(rf);
                 }
-                finally {
-                    if (rf != null) {
-                        try {
+                finally
+                {
+                    if (rf != null)
+                    {
+                        try
+                        {
                             rf.Close();
                         }
-                        catch  {
+                        catch
+                        {
                             // empty on purpose
                         }
                     }
@@ -262,14 +290,15 @@ namespace RazorPDF.Legacy.Text.Pdf {
             else
                 throw new DocumentException(afmFile + " is not an AFM or PFM font file.");
             EncodingScheme = EncodingScheme.Trim();
-            if (EncodingScheme.Equals("AdobeStandardEncoding") || EncodingScheme.Equals("StandardEncoding")) {
+            if (EncodingScheme.Equals("AdobeStandardEncoding") || EncodingScheme.Equals("StandardEncoding"))
+            {
                 fontSpecific = false;
             }
             if (!encoding.StartsWith("#"))
                 PdfEncodings.ConvertToBytes(" ", enc); // check if the encoding exists
             CreateEncoding();
         }
-    
+
         /** Gets the width from the font according to the <CODE>name</CODE> or,
          * if the <CODE>name</CODE> is null, meaning it is a symbolic font,
          * the char <CODE>c</CODE>.
@@ -277,12 +306,15 @@ namespace RazorPDF.Legacy.Text.Pdf {
          * @param name the glyph name
          * @return the width of the char
          */
-        internal override int GetRawWidth(int c, string name) {
+        internal override int GetRawWidth(int c, string name)
+        {
             Object[] metrics;
-            if (name == null) { // font specific
+            if (name == null)
+            { // font specific
                 metrics = (Object[])CharMetrics[c];
             }
-            else {
+            else
+            {
                 if (name.Equals(".notdef"))
                     return 0;
                 metrics = (Object[])CharMetrics[name];
@@ -291,7 +323,7 @@ namespace RazorPDF.Legacy.Text.Pdf {
                 return (int)metrics[1];
             return 0;
         }
-    
+
         /** Gets the kerning between two Unicode characters. The characters
          * are converted to names and this names are used to find the kerning
          * pairs in the <CODE>Hashtable</CODE> <CODE>KernPairs</CODE>.
@@ -299,7 +331,8 @@ namespace RazorPDF.Legacy.Text.Pdf {
          * @param char2 the second char
          * @return the kerning to be applied
          */
-        public override int GetKerning(int char1, int char2) {
+        public override int GetKerning(int char1, int char2)
+        {
             string first = GlyphList.UnicodeToName((int)char1);
             if (first == null)
                 return 0;
@@ -309,23 +342,26 @@ namespace RazorPDF.Legacy.Text.Pdf {
             Object[] obj = (Object[])KernPairs[first];
             if (obj == null)
                 return 0;
-            for (int k = 0; k < obj.Length; k += 2) {
+            for (int k = 0; k < obj.Length; k += 2)
+            {
                 if (second.Equals(obj[k]))
                     return (int)obj[k + 1];
             }
             return 0;
         }
-    
-    
+
+
         /** Reads the font metrics
          * @param rf the AFM file
          * @throws DocumentException the AFM file is invalid
          * @throws IOException the AFM file could not be read
          */
-        public void Process(RandomAccessFileOrArray rf) {
+        public void Process(RandomAccessFileOrArray rf)
+        {
             string line;
             bool isMetrics = false;
-            while ((line = rf.ReadLine()) != null) {
+            while ((line = rf.ReadLine()) != null)
+            {
                 StringTokenizer tok = new StringTokenizer(line, " ,\n\r\t\f");
                 if (!tok.HasMoreTokens())
                     continue;
@@ -344,7 +380,8 @@ namespace RazorPDF.Legacy.Text.Pdf {
                     IsFixedPitch = tok.NextToken().Equals("true");
                 else if (ident.Equals("CharacterSet"))
                     CharacterSet = tok.NextToken("\u00ff").Substring(1);
-                else if (ident.Equals("FontBBox")) {
+                else if (ident.Equals("FontBBox"))
+                {
                     llx = (int)float.Parse(tok.NextToken(), NumberFormatInfo.InvariantInfo);
                     lly = (int)float.Parse(tok.NextToken(), NumberFormatInfo.InvariantInfo);
                     urx = (int)float.Parse(tok.NextToken(), NumberFormatInfo.InvariantInfo);
@@ -368,19 +405,22 @@ namespace RazorPDF.Legacy.Text.Pdf {
                     StdHW = (int)float.Parse(tok.NextToken(), NumberFormatInfo.InvariantInfo);
                 else if (ident.Equals("StdVW"))
                     StdVW = (int)float.Parse(tok.NextToken(), NumberFormatInfo.InvariantInfo);
-                else if (ident.Equals("StartCharMetrics")) {
+                else if (ident.Equals("StartCharMetrics"))
+                {
                     isMetrics = true;
                     break;
                 }
             }
             if (!isMetrics)
                 throw new DocumentException("Missing StartCharMetrics in " + fileName);
-            while ((line = rf.ReadLine()) != null) {
+            while ((line = rf.ReadLine()) != null)
+            {
                 StringTokenizer tok = new StringTokenizer(line);
                 if (!tok.HasMoreTokens())
                     continue;
                 string ident = tok.NextToken();
-                if (ident.Equals("EndCharMetrics")) {
+                if (ident.Equals("EndCharMetrics"))
+                {
                     isMetrics = false;
                     break;
                 }
@@ -402,52 +442,59 @@ namespace RazorPDF.Legacy.Text.Pdf {
                         WX = (int)float.Parse(tokc.NextToken(), NumberFormatInfo.InvariantInfo);
                     else if (ident.Equals("N"))
                         N = tokc.NextToken();
-                    else if (ident.Equals("B")) {
+                    else if (ident.Equals("B"))
+                    {
                         B = new int[]{int.Parse(tokc.NextToken()), 
                                             int.Parse(tokc.NextToken()),
                                             int.Parse(tokc.NextToken()),
                                             int.Parse(tokc.NextToken())};
                     }
                 }
-                Object[] metrics = new Object[]{C, WX, N, B};
+                Object[] metrics = new Object[] { C, WX, N, B };
                 if (C >= 0)
                     CharMetrics[C] = metrics;
                 CharMetrics[N] = metrics;
             }
             if (isMetrics)
                 throw new DocumentException("Missing EndCharMetrics in " + fileName);
-            if (!CharMetrics.ContainsKey("nonbreakingspace")) {
+            if (!CharMetrics.ContainsKey("nonbreakingspace"))
+            {
                 Object[] space = (Object[])CharMetrics["space"];
                 if (space != null)
                     CharMetrics["nonbreakingspace"] = space;
             }
-            while ((line = rf.ReadLine()) != null) {
+            while ((line = rf.ReadLine()) != null)
+            {
                 StringTokenizer tok = new StringTokenizer(line);
                 if (!tok.HasMoreTokens())
                     continue;
                 string ident = tok.NextToken();
                 if (ident.Equals("EndFontMetrics"))
                     return;
-                if (ident.Equals("StartKernPairs")) {
+                if (ident.Equals("StartKernPairs"))
+                {
                     isMetrics = true;
                     break;
                 }
             }
             if (!isMetrics)
                 throw new DocumentException("Missing EndFontMetrics in " + fileName);
-            while ((line = rf.ReadLine()) != null) {
+            while ((line = rf.ReadLine()) != null)
+            {
                 StringTokenizer tok = new StringTokenizer(line);
                 if (!tok.HasMoreTokens())
                     continue;
                 string ident = tok.NextToken();
-                if (ident.Equals("KPX")) {
+                if (ident.Equals("KPX"))
+                {
                     string first = tok.NextToken();
                     string second = tok.NextToken();
                     int width = (int)float.Parse(tok.NextToken(), NumberFormatInfo.InvariantInfo);
                     Object[] relates = (Object[])KernPairs[first];
                     if (relates == null)
-                        KernPairs[first] = new Object[]{second, width};
-                    else {
+                        KernPairs[first] = new Object[] { second, width };
+                    else
+                    {
                         int n = relates.Length;
                         Object[] relates2 = new Object[n + 2];
                         Array.Copy(relates, 0, relates2, 0, n);
@@ -456,7 +503,8 @@ namespace RazorPDF.Legacy.Text.Pdf {
                         KernPairs[first] = relates2;
                     }
                 }
-                else if (ident.Equals("EndKernPairs")) {
+                else if (ident.Equals("EndKernPairs"))
+                {
                     isMetrics = false;
                     break;
                 }
@@ -465,18 +513,20 @@ namespace RazorPDF.Legacy.Text.Pdf {
                 throw new DocumentException("Missing EndKernPairs in " + fileName);
             rf.Close();
         }
-    
+
         /** If the embedded flag is <CODE>false</CODE> or if the font is
          *  one of the 14 built in types, it returns <CODE>null</CODE>,
          * otherwise the font is read and output in a PdfStream object.
          * @return the PdfStream containing the font or <CODE>null</CODE>
          * @throws DocumentException if there is an error reading the font
          */
-        public override PdfStream GetFullFontStream() {
+        public override PdfStream GetFullFontStream()
+        {
             if (builtinFont || !embedded)
                 return null;
             RandomAccessFileOrArray rf = null;
-            try {
+            try
+            {
                 string filePfb = fileName.Substring(0, fileName.Length - 3) + "pfb";
                 if (pfb == null)
                     rf = new RandomAccessFileOrArray(filePfb, true);
@@ -486,7 +536,8 @@ namespace RazorPDF.Legacy.Text.Pdf {
                 byte[] st = new byte[fileLength - 18];
                 int[] lengths = new int[3];
                 int bytePtr = 0;
-                for (int k = 0; k < 3; ++k) {
+                for (int k = 0; k < 3; ++k)
+                {
                     if (rf.Read() != 0x80)
                         throw new DocumentException("Start marker missing in " + filePfb);
                     if (rf.Read() != PFB_TYPES[k])
@@ -496,7 +547,8 @@ namespace RazorPDF.Legacy.Text.Pdf {
                     size += rf.Read() << 16;
                     size += rf.Read() << 24;
                     lengths[k] = size;
-                    while (size != 0) {
+                    while (size != 0)
+                    {
                         int got = rf.Read(st, bytePtr, size);
                         if (got < 0)
                             throw new DocumentException("Premature end in " + filePfb);
@@ -506,24 +558,29 @@ namespace RazorPDF.Legacy.Text.Pdf {
                 }
                 return new StreamFont(st, lengths, compressionLevel);
             }
-            finally {
-                if (rf != null) {
-                    try {
+            finally
+            {
+                if (rf != null)
+                {
+                    try
+                    {
                         rf.Close();
                     }
-                    catch  {
+                    catch
+                    {
                         // empty on purpose
                     }
                 }
             }
         }
-    
+
         /** Generates the font descriptor for this font or <CODE>null</CODE> if it is
          * one of the 14 built in fonts.
          * @param fontStream the indirect reference to a PdfStream containing the font or <CODE>null</CODE>
          * @return the PdfDictionary containing the font descriptor or <CODE>null</CODE>
          */
-        public PdfDictionary GetFontDescriptor(PdfIndirectReference fontStream) {
+        public PdfDictionary GetFontDescriptor(PdfIndirectReference fontStream)
+        {
             if (builtinFont)
                 return null;
             PdfDictionary dic = new PdfDictionary(PdfName.FONTDESCRIPTOR);
@@ -547,10 +604,10 @@ namespace RazorPDF.Legacy.Text.Pdf {
             if (Weight.Equals("Bold"))
                 flags |= 262144;
             dic.Put(PdfName.FLAGS, new PdfNumber(flags));
-            
+
             return dic;
         }
-    
+
         /** Generates the font dictionary for this font.
          * @return the PdfDictionary containing the font dictionary
          * @param firstChar the first valid character
@@ -558,27 +615,35 @@ namespace RazorPDF.Legacy.Text.Pdf {
          * @param shortTag a 256 bytes long <CODE>byte</CODE> array where each unused byte is represented by 0
          * @param fontDescriptor the indirect reference to a PdfDictionary containing the font descriptor or <CODE>null</CODE>
          */
-        private PdfDictionary GetFontBaseType(PdfIndirectReference fontDescriptor, int firstChar, int lastChar, byte[] shortTag) {
+        private PdfDictionary GetFontBaseType(PdfIndirectReference fontDescriptor, int firstChar, int lastChar, byte[] shortTag)
+        {
             PdfDictionary dic = new PdfDictionary(PdfName.FONT);
             dic.Put(PdfName.SUBTYPE, PdfName.TYPE1);
             dic.Put(PdfName.BASEFONT, new PdfName(FontName));
             bool stdEncoding = encoding.Equals(CP1252) || encoding.Equals(MACROMAN);
-            if (!fontSpecific || specialMap != null) {
-                for (int k = firstChar; k <= lastChar; ++k) {
-                    if (!differences[k].Equals(notdef)) {
+            if (!fontSpecific || specialMap != null)
+            {
+                for (int k = firstChar; k <= lastChar; ++k)
+                {
+                    if (!differences[k].Equals(notdef))
+                    {
                         firstChar = k;
                         break;
                     }
                 }
                 if (stdEncoding)
                     dic.Put(PdfName.ENCODING, encoding.Equals(CP1252) ? PdfName.WIN_ANSI_ENCODING : PdfName.MAC_ROMAN_ENCODING);
-                else {
+                else
+                {
                     PdfDictionary enc = new PdfDictionary(PdfName.ENCODING);
                     PdfArray dif = new PdfArray();
-                    bool gap = true;                
-                    for (int k = firstChar; k <= lastChar; ++k) {
-                        if (shortTag[k] != 0) {
-                            if (gap) {
+                    bool gap = true;
+                    for (int k = firstChar; k <= lastChar; ++k)
+                    {
+                        if (shortTag[k] != 0)
+                        {
+                            if (gap)
+                            {
                                 dif.Add(new PdfNumber(k));
                                 gap = false;
                             }
@@ -591,11 +656,13 @@ namespace RazorPDF.Legacy.Text.Pdf {
                     dic.Put(PdfName.ENCODING, enc);
                 }
             }
-            if (specialMap != null || forceWidthsOutput || !(builtinFont && (fontSpecific || stdEncoding))) {
+            if (specialMap != null || forceWidthsOutput || !(builtinFont && (fontSpecific || stdEncoding)))
+            {
                 dic.Put(PdfName.FIRSTCHAR, new PdfNumber(firstChar));
                 dic.Put(PdfName.LASTCHAR, new PdfNumber(lastChar));
                 PdfArray wd = new PdfArray();
-                for (int k = firstChar; k <= lastChar; ++k) {
+                for (int k = firstChar; k <= lastChar; ++k)
+                {
                     if (shortTag[k] == 0)
                         wd.Add(new PdfNumber(0));
                     else
@@ -607,7 +674,7 @@ namespace RazorPDF.Legacy.Text.Pdf {
                 dic.Put(PdfName.FONTDESCRIPTOR, fontDescriptor);
             return dic;
         }
-    
+
         /** Outputs to the writer the font dictionaries and streams.
          * @param writer the writer for this document
          * @param ref the font indirect reference
@@ -615,12 +682,14 @@ namespace RazorPDF.Legacy.Text.Pdf {
          * @throws IOException on error
          * @throws DocumentException error in generating the object
          */
-        internal override void WriteFont(PdfWriter writer, PdfIndirectReference piref, Object[] parms) {
+        internal override void WriteFont(PdfWriter writer, PdfIndirectReference piref, Object[] parms)
+        {
             int firstChar = (int)parms[0];
             int lastChar = (int)parms[1];
             byte[] shortTag = (byte[])parms[2];
             bool subsetp = (bool)parms[3] && subset;
-            if (!subsetp) {
+            if (!subsetp)
+            {
                 firstChar = 0;
                 lastChar = shortTag.Length - 1;
                 for (int k = 0; k < shortTag.Length; ++k)
@@ -630,19 +699,21 @@ namespace RazorPDF.Legacy.Text.Pdf {
             PdfObject pobj = null;
             PdfIndirectObject obj = null;
             pobj = GetFullFontStream();
-            if (pobj != null){
+            if (pobj != null)
+            {
                 obj = writer.AddToBody(pobj);
                 ind_font = obj.IndirectReference;
             }
             pobj = GetFontDescriptor(ind_font);
-            if (pobj != null){
+            if (pobj != null)
+            {
                 obj = writer.AddToBody(pobj);
                 ind_font = obj.IndirectReference;
             }
             pobj = GetFontBaseType(ind_font, firstChar, lastChar, shortTag);
             writer.AddToBody(pobj, piref);
         }
-    
+
         /** Gets the font parameter identified by <CODE>key</CODE>. Valid values
          * for <CODE>key</CODE> are <CODE>ASCENT</CODE>, <CODE>CAPHEIGHT</CODE>, <CODE>DESCENT</CODE>,
          * <CODE>ITALICANGLE</CODE>, <CODE>BBOXLLX</CODE>, <CODE>BBOXLLY</CODE>, <CODE>BBOXURX</CODE>
@@ -650,9 +721,11 @@ namespace RazorPDF.Legacy.Text.Pdf {
          * @param key the parameter to be extracted
          * @param fontSize the font size in points
          * @return the parameter in points
-         */    
-        public override float GetFontDescriptor(int key, float fontSize) {
-            switch (key) {
+         */
+        public override float GetFontDescriptor(int key, float fontSize)
+        {
+            switch (key)
+            {
                 case AWT_ASCENT:
                 case ASCENT:
                     return Ascender * fontSize / 1000;
@@ -682,19 +755,22 @@ namespace RazorPDF.Legacy.Text.Pdf {
             }
             return 0;
         }
-    
+
         /** Gets the postscript font name.
          * @return the postscript font name
          */
-        public override string PostscriptFontName {
-            get {
+        public override string PostscriptFontName
+        {
+            get
+            {
                 return FontName;
             }
-            set {
+            set
+            {
                 FontName = value;
             }
         }
-    
+
         /** Gets the full name of the font. If it is a True Type font
          * each array element will have {Platform ID, Platform Encoding ID,
          * Language ID, font name}. The interpretation of this values can be
@@ -703,12 +779,14 @@ namespace RazorPDF.Legacy.Text.Pdf {
          * font name}.
          * @return the full name of the font
          */
-        public override string[][] FullFontName {
-            get {
-                return new string[][]{new string[] {"", "", "", FullName}};
+        public override string[][] FullFontName
+        {
+            get
+            {
+                return new string[][] { new string[] { "", "", "", FullName } };
             }
         }
-    
+
         /** Gets all the entries of the names-table. If it is a True Type font
         * each array element will have {Name ID, Platform ID, Platform Encoding ID,
         * Language ID, font name}. The interpretation of this values can be
@@ -717,12 +795,14 @@ namespace RazorPDF.Legacy.Text.Pdf {
         * font name}.
         * @return the full name of the font
         */
-        public override string[][] AllNameEntries {
-            get {
-                return new string[][]{new string[]{"4", "", "", "", FullName}};
+        public override string[][] AllNameEntries
+        {
+            get
+            {
+                return new string[][] { new string[] { "4", "", "", "", FullName } };
             }
         }
-        
+
         /** Gets the family name of the font. If it is a True Type font
          * each array element will have {Platform ID, Platform Encoding ID,
          * Language ID, font name}. The interpretation of this values can be
@@ -731,19 +811,22 @@ namespace RazorPDF.Legacy.Text.Pdf {
          * font name}.
          * @return the family name of the font
          */
-        public override string[][] FamilyFontName {
-            get {
-                return new string[][]{new string[] {"", "", "", FamilyName}};
+        public override string[][] FamilyFontName
+        {
+            get
+            {
+                return new string[][] { new string[] { "", "", "", FamilyName } };
             }
         }
-    
+
         /** Checks if the font has any kerning pairs.
         * @return <CODE>true</CODE> if the font has any kerning pairs
-        */    
-        public override bool HasKernPairs() {
+        */
+        public override bool HasKernPairs()
+        {
             return KernPairs.Count > 0;
         }
-        
+
         /**
         * Sets the kerning between two Unicode chars.
         * @param char1 the first char
@@ -751,7 +834,8 @@ namespace RazorPDF.Legacy.Text.Pdf {
         * @param kern the kerning to apply in normalized 1000 units
         * @return <code>true</code> if the kerning was applied, <code>false</code> otherwise
         */
-        public override bool SetKerning(int char1, int char2, int kern) {
+        public override bool SetKerning(int char1, int char2, int kern)
+        {
             String first = GlyphList.UnicodeToName((int)char1);
             if (first == null)
                 return false;
@@ -759,13 +843,16 @@ namespace RazorPDF.Legacy.Text.Pdf {
             if (second == null)
                 return false;
             Object[] obj = (Object[])KernPairs[first];
-            if (obj == null) {
-                obj = new Object[]{second, kern};
+            if (obj == null)
+            {
+                obj = new Object[] { second, kern };
                 KernPairs[first] = obj;
                 return true;
             }
-            for (int k = 0; k < obj.Length; k += 2) {
-                if (second.Equals(obj[k])) {
+            for (int k = 0; k < obj.Length; k += 2)
+            {
+                if (second.Equals(obj[k]))
+                {
                     obj[k + 1] = kern;
                     return true;
                 }
@@ -778,13 +865,16 @@ namespace RazorPDF.Legacy.Text.Pdf {
             KernPairs[first] = obj2;
             return true;
         }
-        
-        protected override int[] GetRawCharBBox(int c, String name) {
+
+        protected override int[] GetRawCharBBox(int c, String name)
+        {
             Object[] metrics;
-            if (name == null) { // font specific
+            if (name == null)
+            { // font specific
                 metrics = (Object[])CharMetrics[c];
             }
-            else {
+            else
+            {
                 if (name.Equals(".notdef"))
                     return null;
                 metrics = (Object[])CharMetrics[name];

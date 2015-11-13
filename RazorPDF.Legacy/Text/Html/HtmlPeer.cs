@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.Collections;
 using RazorPDF.Legacy.Misc.Util;
-using RazorPDF.Legacy.Misc.Util;
 using RazorPDF.Legacy.Text.Xml;
 
 /*
@@ -55,45 +54,54 @@ using RazorPDF.Legacy.Text.Xml;
  * http://www.lowagie.com/iText/
  */
 
-namespace RazorPDF.Legacy.Text.Html {
+namespace RazorPDF.Legacy.Text.Html
+{
 
     /**
     * This interface is implemented by the peer of all the iText objects.
     */
 
-    public class HtmlPeer : XmlPeer {
-        
-    /**
-    * Creates a XmlPeer.
-    * @param name the iText name of the tag
-    * @param alias the Html name of the tag
-    */
-        
-        public HtmlPeer(String name, String alias) : base(name, alias.ToLower(CultureInfo.InvariantCulture)) {
+    public class HtmlPeer : XmlPeer
+    {
+
+        /**
+        * Creates a XmlPeer.
+        * @param name the iText name of the tag
+        * @param alias the Html name of the tag
+        */
+
+        public HtmlPeer(String name, String alias)
+            : base(name, alias.ToLower(CultureInfo.InvariantCulture))
+        {
         }
-        
-    /**
-    * Sets an alias for an attribute.
-    *
-    * @param   name    the iText tagname
-    * @param   alias   the custom tagname
-    */
-        
-        public override void AddAlias(String name, String alias) {
+
+        /**
+        * Sets an alias for an attribute.
+        *
+        * @param   name    the iText tagname
+        * @param   alias   the custom tagname
+        */
+
+        public override void AddAlias(String name, String alias)
+        {
             attributeAliases.Add(alias.ToLower(CultureInfo.InvariantCulture), name);
         }
 
         /**
         * @see com.lowagie.text.xml.XmlPeer#getAttributes(org.xml.sax.Attributes)
         */
-        public override Properties GetAttributes(Hashtable attrs) {
-            Properties attributes = new Properties();
+        public override TagProperties GetAttributes(Hashtable attrs)
+        {
+            var attributes = new TagProperties();
             attributes.AddAll(attributeValues);
-            if (defaultContent != null) {
+            if (defaultContent != null)
+            {
                 attributes[ElementTags.ITEXT] = defaultContent;
             }
-            if (attrs != null) {
-                foreach (string key in attrs.Keys) {
+            if (attrs != null)
+            {
+                foreach (string key in attrs.Keys)
+                {
                     attributes.Add(GetName(key).ToLower(CultureInfo.InvariantCulture), (string)attrs[key]);
                 }
             }

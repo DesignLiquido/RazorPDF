@@ -55,126 +55,154 @@ using RazorPDF.Legacy.Text.Html;
  * http://www.lowagie.com/iText/
  */
 
-namespace RazorPDF.Legacy.Text.Factories {
+namespace RazorPDF.Legacy.Text.Factories
+{
 
     /**
     * This class is able to create Element objects based on a list of properties.
     */
 
-    public class ElementFactory {
+    public class ElementFactory
+    {
 
-        public static Chunk GetChunk(Properties attributes) {
+        public static Chunk GetChunk(TagProperties attributes)
+        {
             Chunk chunk = new Chunk();
-            
+
             chunk.Font = FontFactory.GetFont(attributes);
             String value;
-            
+
             value = attributes[ElementTags.ITEXT];
-            if (value != null) {
+            if (value != null)
+            {
                 chunk.Append(value);
             }
             value = attributes[ElementTags.LOCALGOTO];
-            if (value != null) {
+            if (value != null)
+            {
                 chunk.SetLocalGoto(value);
             }
             value = attributes[ElementTags.REMOTEGOTO];
-            if (value != null) {
+            if (value != null)
+            {
                 String page = attributes[ElementTags.PAGE];
-                if (page != null) {
+                if (page != null)
+                {
                     chunk.SetRemoteGoto(value, int.Parse(page));
                 }
-                else {
+                else
+                {
                     String destination = attributes[ElementTags.DESTINATION];
-                    if (destination != null) {
+                    if (destination != null)
+                    {
                         chunk.SetRemoteGoto(value, destination);
                     }
                 }
             }
             value = attributes[ElementTags.LOCALDESTINATION];
-            if (value != null) {
+            if (value != null)
+            {
                 chunk.SetLocalDestination(value);
             }
             value = attributes[ElementTags.SUBSUPSCRIPT];
-            if (value != null) {
+            if (value != null)
+            {
                 chunk.SetTextRise(float.Parse(value, NumberFormatInfo.InvariantInfo));
             }
             value = attributes[Markup.CSS_KEY_VERTICALALIGN];
-            if (value != null && value.EndsWith("%")) {
+            if (value != null && value.EndsWith("%"))
+            {
                 float p = float.Parse(value.Substring(0, value.Length - 1), NumberFormatInfo.InvariantInfo) / 100f;
                 chunk.SetTextRise(p * chunk.Font.Size);
             }
             value = attributes[ElementTags.GENERICTAG];
-            if (value != null) {
+            if (value != null)
+            {
                 chunk.SetGenericTag(value);
             }
             value = attributes[ElementTags.BACKGROUNDCOLOR];
-            if (value != null) {
+            if (value != null)
+            {
                 chunk.SetBackground(Markup.DecodeColor(value));
             }
             return chunk;
         }
-        
-        public static Phrase GetPhrase(Properties attributes) {
+
+        public static Phrase GetPhrase(TagProperties attributes)
+        {
             Phrase phrase = new Phrase();
             phrase.Font = FontFactory.GetFont(attributes);
             String value;
             value = attributes[ElementTags.LEADING];
-            if (value != null) {
+            if (value != null)
+            {
                 phrase.Leading = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             value = attributes[Markup.CSS_KEY_LINEHEIGHT];
-            if (value != null) {
+            if (value != null)
+            {
                 phrase.Leading = Markup.ParseLength(value, Markup.DEFAULT_FONT_SIZE);
             }
             value = attributes[ElementTags.ITEXT];
-            if (value != null) {
+            if (value != null)
+            {
                 Chunk chunk = new Chunk(value);
-                if ((value = attributes[ElementTags.GENERICTAG]) != null) {
+                if ((value = attributes[ElementTags.GENERICTAG]) != null)
+                {
                     chunk.SetGenericTag(value);
                 }
                 phrase.Add(chunk);
             }
             return phrase;
         }
-        
-        public static Anchor GetAnchor(Properties attributes) {
+
+        public static Anchor GetAnchor(TagProperties attributes)
+        {
             Anchor anchor = new Anchor(GetPhrase(attributes));
             String value;
             value = attributes[ElementTags.NAME];
-            if (value != null) {
+            if (value != null)
+            {
                 anchor.Name = value;
             }
             value = (String)attributes.Remove(ElementTags.REFERENCE);
-            if (value != null) {
+            if (value != null)
+            {
                 anchor.Reference = value;
             }
             return anchor;
         }
-        
-        public static Paragraph GetParagraph(Properties attributes) {
+
+        public static Paragraph GetParagraph(TagProperties attributes)
+        {
             Paragraph paragraph = new Paragraph(GetPhrase(attributes));
             String value;
             value = attributes[ElementTags.ALIGN];
-            if (value != null) {
+            if (value != null)
+            {
                 paragraph.SetAlignment(value);
             }
             value = attributes[ElementTags.INDENTATIONLEFT];
-            if (value != null) {
+            if (value != null)
+            {
                 paragraph.IndentationLeft = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             value = attributes[ElementTags.INDENTATIONRIGHT];
-            if (value != null) {
+            if (value != null)
+            {
                 paragraph.IndentationRight = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             return paragraph;
         }
-        
-        public static ListItem GetListItem(Properties attributes) {
+
+        public static ListItem GetListItem(TagProperties attributes)
+        {
             ListItem item = new ListItem(GetParagraph(attributes));
             return item;
         }
-        
-        public static List GetList(Properties attributes) {
+
+        public static List GetList(TagProperties attributes)
+        {
             List list = new List();
 
             list.Numbered = Utilities.CheckTrueOrFalse(attributes, ElementTags.NUMBERED);
@@ -182,67 +210,80 @@ namespace RazorPDF.Legacy.Text.Factories {
             list.Lowercase = Utilities.CheckTrueOrFalse(attributes, ElementTags.LOWERCASE);
             list.Autoindent = Utilities.CheckTrueOrFalse(attributes, ElementTags.AUTO_INDENT_ITEMS);
             list.Alignindent = Utilities.CheckTrueOrFalse(attributes, ElementTags.ALIGN_INDENTATION_ITEMS);
-            
+
             String value;
-            
+
             value = attributes[ElementTags.FIRST];
-            if (value != null) {
+            if (value != null)
+            {
                 char character = value[0];
-                if (char.IsLetter(character) ) {
+                if (char.IsLetter(character))
+                {
                     list.First = (int)character;
                 }
-                else {
+                else
+                {
                     list.First = int.Parse(value);
                 }
             }
-            
+
             value = attributes[ElementTags.LISTSYMBOL];
-            if (value != null) {
+            if (value != null)
+            {
                 list.ListSymbol = new Chunk(value, FontFactory.GetFont(attributes));
             }
-            
+
             value = attributes[ElementTags.INDENTATIONLEFT];
-            if (value != null) {
+            if (value != null)
+            {
                 list.IndentationLeft = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
-            
+
             value = attributes[ElementTags.INDENTATIONRIGHT];
-            if (value != null) {
+            if (value != null)
+            {
                 list.IndentationRight = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
-            
+
             value = attributes[ElementTags.SYMBOLINDENT];
-            if (value != null) {
+            if (value != null)
+            {
                 list.SymbolIndent = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
-            
+
             return list;
         }
 
-        public static Cell GetCell(Properties attributes) {
+        public static Cell GetCell(TagProperties attributes)
+        {
             Cell cell = new Cell();
             String value;
 
             cell.SetHorizontalAlignment(attributes[ElementTags.HORIZONTALALIGN]);
             cell.SetVerticalAlignment(attributes[ElementTags.VERTICALALIGN]);
             value = attributes[ElementTags.WIDTH];
-            if (value != null) {
+            if (value != null)
+            {
                 cell.SetWidth(value);
             }
             value = attributes[ElementTags.COLSPAN];
-            if (value != null) {
+            if (value != null)
+            {
                 cell.Colspan = int.Parse(value);
             }
             value = attributes[ElementTags.ROWSPAN];
-            if (value != null) {
+            if (value != null)
+            {
                 cell.Rowspan = int.Parse(value);
             }
             value = attributes[ElementTags.LEADING];
-            if (value != null) {
+            if (value != null)
+            {
                 cell.Leading = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             cell.Header = Utilities.CheckTrueOrFalse(attributes, ElementTags.HEADER);
-            if (Utilities.CheckTrueOrFalse(attributes, ElementTags.NOWRAP)) {
+            if (Utilities.CheckTrueOrFalse(attributes, ElementTags.NOWRAP))
+            {
                 cell.MaxLines = 1;
             }
             SetRectangleProperties(cell, attributes);
@@ -254,64 +295,78 @@ namespace RazorPDF.Legacy.Text.Factories {
         * @param attributes
         * @return a Table
         */
-        public static Table GetTable(Properties attributes) {
+        public static Table GetTable(TagProperties attributes)
+        {
             String value;
             Table table;
 
             value = attributes[ElementTags.WIDTHS];
-            if (value != null) {
+            if (value != null)
+            {
                 StringTokenizer widthTokens = new StringTokenizer(value, ";");
                 ArrayList values = new ArrayList();
-                while (widthTokens.HasMoreTokens()) {
+                while (widthTokens.HasMoreTokens())
+                {
                     values.Add(widthTokens.NextToken());
                 }
                 table = new Table(values.Count);
                 float[] widths = new float[table.Columns];
-                for (int i = 0; i < values.Count; i++) {
+                for (int i = 0; i < values.Count; i++)
+                {
                     value = (String)values[i];
                     widths[i] = float.Parse(value, NumberFormatInfo.InvariantInfo);
                 }
                 table.Widths = widths;
             }
-            else {
+            else
+            {
                 value = attributes[ElementTags.COLUMNS];
-                try {
+                try
+                {
                     table = new Table(int.Parse(value));
                 }
-                catch {
+                catch
+                {
                     table = new Table(1);
                 }
             }
-            
+
             table.Border = Table.BOX;
             table.BorderWidth = 1;
             table.DefaultCell.Border = Table.BOX;
-            
+
             value = attributes[ElementTags.LASTHEADERROW];
-            if (value != null) {
+            if (value != null)
+            {
                 table.LastHeaderRow = int.Parse(value);
             }
             value = attributes[ElementTags.ALIGN];
-            if (value != null) {
+            if (value != null)
+            {
                 table.SetAlignment(value);
             }
             value = attributes[ElementTags.CELLSPACING];
-            if (value != null) {
+            if (value != null)
+            {
                 table.Spacing = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             value = attributes[ElementTags.CELLPADDING];
-            if (value != null) {
+            if (value != null)
+            {
                 table.Padding = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             value = attributes[ElementTags.OFFSET];
-            if (value != null) {
+            if (value != null)
+            {
                 table.Offset = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             value = attributes[ElementTags.WIDTH];
-            if (value != null) {
+            if (value != null)
+            {
                 if (value.EndsWith("%"))
                     table.Width = float.Parse(value.Substring(0, value.Length - 1), NumberFormatInfo.InvariantInfo);
-                else {
+                else
+                {
                     table.Width = float.Parse(value, NumberFormatInfo.InvariantInfo);
                     table.Locked = true;
                 }
@@ -319,7 +374,7 @@ namespace RazorPDF.Legacy.Text.Factories {
             table.TableFitsPage = Utilities.CheckTrueOrFalse(attributes, ElementTags.TABLEFITSPAGE);
             table.CellsFitPage = Utilities.CheckTrueOrFalse(attributes, ElementTags.CELLSFITPAGE);
             table.Convert2pdfptable = Utilities.CheckTrueOrFalse(attributes, ElementTags.CONVERT2PDFP);
-            
+
             SetRectangleProperties(table, attributes);
             return table;
         }
@@ -327,31 +382,38 @@ namespace RazorPDF.Legacy.Text.Factories {
         /**
         * Sets some Rectangle properties (for a Cell, Table,...).
         */
-        private static void SetRectangleProperties(Rectangle rect, Properties attributes) {
+        private static void SetRectangleProperties(Rectangle rect, TagProperties attributes)
+        {
             String value;
             value = attributes[ElementTags.BORDERWIDTH];
-            if (value != null) {
+            if (value != null)
+            {
                 rect.BorderWidth = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             int border = 0;
-            if (Utilities.CheckTrueOrFalse(attributes, ElementTags.LEFT)) {
+            if (Utilities.CheckTrueOrFalse(attributes, ElementTags.LEFT))
+            {
                 border |= Rectangle.LEFT_BORDER;
             }
-            if (Utilities.CheckTrueOrFalse(attributes, ElementTags.RIGHT)) {
+            if (Utilities.CheckTrueOrFalse(attributes, ElementTags.RIGHT))
+            {
                 border |= Rectangle.RIGHT_BORDER;
             }
-            if (Utilities.CheckTrueOrFalse(attributes, ElementTags.TOP)) {
+            if (Utilities.CheckTrueOrFalse(attributes, ElementTags.TOP))
+            {
                 border |= Rectangle.TOP_BORDER;
             }
-            if (Utilities.CheckTrueOrFalse(attributes, ElementTags.BOTTOM)) {
+            if (Utilities.CheckTrueOrFalse(attributes, ElementTags.BOTTOM))
+            {
                 border |= Rectangle.BOTTOM_BORDER;
             }
             rect.Border = border;
-            
+
             String r = attributes[ElementTags.RED];
             String g = attributes[ElementTags.GREEN];
             String b = attributes[ElementTags.BLUE];
-            if (r != null || g != null || b != null) {
+            if (r != null || g != null || b != null)
+            {
                 int red = 0;
                 int green = 0;
                 int blue = 0;
@@ -360,14 +422,16 @@ namespace RazorPDF.Legacy.Text.Factories {
                 if (b != null) blue = int.Parse(b);
                 rect.BorderColor = new Color(red, green, blue);
             }
-            else {
+            else
+            {
                 rect.BorderColor = Markup.DecodeColor(attributes[ElementTags.BORDERCOLOR]);
             }
             r = (String)attributes.Remove(ElementTags.BGRED);
             g = (String)attributes.Remove(ElementTags.BGGREEN);
             b = (String)attributes.Remove(ElementTags.BGBLUE);
             value = attributes[ElementTags.BACKGROUNDCOLOR];
-            if (r != null || g != null || b != null) {
+            if (r != null || g != null || b != null)
+            {
                 int red = 0;
                 int green = 0;
                 int blue = 0;
@@ -376,45 +440,55 @@ namespace RazorPDF.Legacy.Text.Factories {
                 if (b != null) blue = int.Parse(b);
                 rect.BackgroundColor = new Color(red, green, blue);
             }
-            else if (value != null) {
+            else if (value != null)
+            {
                 rect.BackgroundColor = Markup.DecodeColor(value);
             }
-            else {
+            else
+            {
                 value = attributes[ElementTags.GRAYFILL];
-                if (value != null) {
+                if (value != null)
+                {
                     rect.GrayFill = float.Parse(value, NumberFormatInfo.InvariantInfo);
                 }
             }
         }
-        
-        public static ChapterAutoNumber GetChapter(Properties attributes) {
+
+        public static ChapterAutoNumber GetChapter(TagProperties attributes)
+        {
             ChapterAutoNumber chapter = new ChapterAutoNumber("");
             SetSectionParameters(chapter, attributes);
             return chapter;
         }
-        
-        public static Section GetSection(Section parent, Properties attributes) {
+
+        public static Section GetSection(Section parent, TagProperties attributes)
+        {
             Section section = parent.AddSection("");
             SetSectionParameters(section, attributes);
             return section;
         }
-        
-        private static void SetSectionParameters(Section section, Properties attributes) {
+
+        private static void SetSectionParameters(Section section, TagProperties attributes)
+        {
             String value;
             value = attributes[ElementTags.NUMBERDEPTH];
-            if (value != null) {
+            if (value != null)
+            {
                 section.NumberDepth = int.Parse(value);
             }
             value = attributes[ElementTags.INDENT];
-            if (value != null) {
+            if (value != null)
+            {
                 section.Indentation = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             value = attributes[ElementTags.INDENTATIONLEFT];
-            if (value != null) {
+            if (value != null)
+            {
                 section.IndentationLeft = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             value = attributes[ElementTags.INDENTATIONRIGHT];
-            if (value != null) {
+            if (value != null)
+            {
                 section.IndentationRight = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
         }
@@ -425,17 +499,19 @@ namespace RazorPDF.Legacy.Text.Factories {
         /// </summary>
         /// <param name="attributes">Some attributes</param>
         /// <returns>an Image</returns>
-        public static Image GetImage(Properties attributes) {
+        public static Image GetImage(TagProperties attributes)
+        {
             String value;
-            
+
             value = attributes[ElementTags.URL];
             if (value == null)
                 throw new ArgumentException("The URL of the image is missing.");
             Image image = Image.GetInstance(value);
-            
+
             value = attributes[ElementTags.ALIGN];
             int align = 0;
-            if (value != null) {
+            if (value != null)
+            {
                 if (Util.EqualsIgnoreCase(ElementTags.ALIGN_LEFT, value))
                     align |= Image.ALIGN_LEFT;
                 else if (Util.EqualsIgnoreCase(ElementTags.ALIGN_RIGHT, value))
@@ -448,28 +524,33 @@ namespace RazorPDF.Legacy.Text.Factories {
             if (Util.EqualsIgnoreCase("true", attributes[ElementTags.TEXTWRAP]))
                 align |= Image.TEXTWRAP;
             image.Alignment = align;
-            
+
             value = attributes[ElementTags.ALT];
-            if (value != null) {
+            if (value != null)
+            {
                 image.Alt = value;
             }
-            
+
             String x = attributes[ElementTags.ABSOLUTEX];
             String y = attributes[ElementTags.ABSOLUTEY];
-            if ((x != null) && (y != null)) {
+            if ((x != null) && (y != null))
+            {
                 image.SetAbsolutePosition(float.Parse(x, NumberFormatInfo.InvariantInfo),
                         float.Parse(y, NumberFormatInfo.InvariantInfo));
             }
             value = attributes[ElementTags.PLAINWIDTH];
-            if (value != null) {
+            if (value != null)
+            {
                 image.ScaleAbsoluteWidth(float.Parse(value, NumberFormatInfo.InvariantInfo));
             }
             value = attributes[ElementTags.PLAINHEIGHT];
-            if (value != null) {
+            if (value != null)
+            {
                 image.ScaleAbsoluteHeight(float.Parse(value, NumberFormatInfo.InvariantInfo));
             }
             value = attributes[ElementTags.ROTATION];
-            if (value != null) {
+            if (value != null)
+            {
                 image.Rotation = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             return image;
@@ -480,48 +561,59 @@ namespace RazorPDF.Legacy.Text.Factories {
         * @param attributes
         * @return an Annotation
         */
-        public static Annotation GetAnnotation(Properties attributes) {
+        public static Annotation GetAnnotation(TagProperties attributes)
+        {
             float llx = 0, lly = 0, urx = 0, ury = 0;
             String value;
-            
+
             value = attributes[ElementTags.LLX];
-            if (value != null) {
+            if (value != null)
+            {
                 llx = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             value = attributes[ElementTags.LLY];
-            if (value != null) {
+            if (value != null)
+            {
                 lly = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             value = attributes[ElementTags.URX];
-            if (value != null) {
+            if (value != null)
+            {
                 urx = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
             value = attributes[ElementTags.URY];
-            if (value != null) {
+            if (value != null)
+            {
                 ury = float.Parse(value, NumberFormatInfo.InvariantInfo);
             }
-            
+
             String title = attributes[ElementTags.TITLE];
             String text = attributes[ElementTags.CONTENT];
-            if (title != null || text != null) {
+            if (title != null || text != null)
+            {
                 return new Annotation(title, text, llx, lly, urx, ury);
             }
             value = attributes[ElementTags.URL];
-            if (value != null) {
+            if (value != null)
+            {
                 return new Annotation(llx, lly, urx, ury, value);
             }
             value = attributes[ElementTags.NAMED];
-            if (value != null) {
+            if (value != null)
+            {
                 return new Annotation(llx, lly, urx, ury, int.Parse(value));
             }
             String file = attributes[ElementTags.FILE];
             String destination = attributes[ElementTags.DESTINATION];
-            String page = (String) attributes.Remove(ElementTags.PAGE);
-            if (file != null) {
-                if (destination != null) {
+            String page = (String)attributes.Remove(ElementTags.PAGE);
+            if (file != null)
+            {
+                if (destination != null)
+                {
                     return new Annotation(llx, lly, urx, ury, file, destination);
                 }
-                if (page != null) {
+                if (page != null)
+                {
                     return new Annotation(llx, lly, urx, ury, file, int.Parse(page));
                 }
             }

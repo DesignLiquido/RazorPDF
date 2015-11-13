@@ -2,7 +2,6 @@ using System;
 using System.Text;
 using System.Globalization;
 using RazorPDF.Legacy.Misc.Util;
-using RazorPDF.Legacy.Misc.Util;
 
 /*
  * $Id: Markup.cs,v 1.2 2008/05/13 11:25:16 psoares33 Exp $
@@ -54,13 +53,15 @@ using RazorPDF.Legacy.Misc.Util;
  * http://www.lowagie.com/iText/
  */
 
-namespace RazorPDF.Legacy.Text.Html {
+namespace RazorPDF.Legacy.Text.Html
+{
     /// <summary>
     /// A class that contains all the possible tagnames and their attributes.
     /// </summary>
-    public class Markup {
+    public class Markup
+    {
         // iText specific
-        
+
         /** the key for any tag */
         public const string ITEXT_TAG = "tag";
 
@@ -68,7 +69,7 @@ namespace RazorPDF.Legacy.Text.Html {
 
         /** the markup for the body part of a file */
         public const string HTML_TAG_BODY = "body";
-        
+
         /** The DIV tag. */
         public const string HTML_TAG_DIV = "div";
 
@@ -108,10 +109,10 @@ namespace RazorPDF.Legacy.Text.Html {
         public const string HTML_ATTR_CSS_ID = "id";
 
         // HTML values
-        
+
         /** This is a possible value for the language attribute (SCRIPT tag). */
         public const string HTML_VALUE_JAVASCRIPT = "text/javascript";
-        
+
         /** This is a possible HTML attribute for the LINK tag. */
         public const string HTML_VALUE_CSS = "text/css";
 
@@ -223,7 +224,7 @@ namespace RazorPDF.Legacy.Text.Html {
 
         /** A possible value for the DISPLAY key */
         public const string CSS_VALUE_INLINE = "inline";
-        
+
         /** a CSS value for text font style */
         public const string CSS_VALUE_ITALIC = "italic";
 
@@ -232,7 +233,7 @@ namespace RazorPDF.Legacy.Text.Html {
 
         /** A possible value for the DISPLAY key */
         public const string CSS_VALUE_LISTITEM = "list-item";
-        
+
         /** a CSS value */
         public const string CSS_VALUE_NONE = "none";
 
@@ -276,33 +277,36 @@ namespace RazorPDF.Legacy.Text.Html {
         /// </summary>
         /// <param name="str">a length in the form of an optional + or -, followed by a number and a unit.</param>
         /// <returns>a float</returns>
-        public static float ParseLength(string str) {
+        public static float ParseLength(string str)
+        {
             // TODO: Evaluate the effect of this.
             // It may change the default behavour of the methd if this is changed.
             // return ParseLength(string, Markup.DEFAULT_FONT_SIZE);
             int pos = 0;
             int length = str.Length;
             bool ok = true;
-            while (ok && pos < length) {
-                switch (str[pos]) {
-                case '+':
-                case '-':
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                case '.':
-                    pos++;
-                    break;
-                default:
-                    ok = false;
-                    break;
+            while (ok && pos < length)
+            {
+                switch (str[pos])
+                {
+                    case '+':
+                    case '-':
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9':
+                    case '.':
+                        pos++;
+                        break;
+                    default:
+                        ok = false;
+                        break;
                 }
             }
             if (pos == 0)
@@ -312,19 +316,23 @@ namespace RazorPDF.Legacy.Text.Html {
             float f = float.Parse(str.Substring(0, pos), NumberFormatInfo.InvariantInfo);
             str = str.Substring(pos);
             // inches
-            if (str.StartsWith("in")) {
+            if (str.StartsWith("in"))
+            {
                 return f * 72f;
             }
             // centimeters
-            if (str.StartsWith("cm")) {
+            if (str.StartsWith("cm"))
+            {
                 return (f / 2.54f) * 72f;
             }
             // millimeters
-            if (str.StartsWith("mm")) {
+            if (str.StartsWith("mm"))
+            {
                 return (f / 25.4f) * 72f;
             }
             // picas
-            if (str.StartsWith("pc")) {
+            if (str.StartsWith("pc"))
+            {
                 return f * 12f;
             }
             // default: we assume the length was measured in points
@@ -336,14 +344,17 @@ namespace RazorPDF.Legacy.Text.Html {
         * 
         * @since 2.1.3
         */
-        public static float ParseLength(String str, float actualFontSize) {
+        public static float ParseLength(String str, float actualFontSize)
+        {
             if (str == null)
                 return 0f;
             int pos = 0;
             int length = str.Length;
             bool ok = true;
-            while (ok && pos < length) {
-                switch (str[pos]) {
+            while (ok && pos < length)
+            {
+                switch (str[pos])
+                {
                     case '+':
                     case '-':
                     case '0':
@@ -369,47 +380,56 @@ namespace RazorPDF.Legacy.Text.Html {
             float f = float.Parse(str.Substring(0, pos), NumberFormatInfo.InvariantInfo);
             str = str.Substring(pos);
             // inches
-            if (str.StartsWith("in")) {
+            if (str.StartsWith("in"))
+            {
                 return f * 72f;
             }
             // centimeters
-            if (str.StartsWith("cm")) {
+            if (str.StartsWith("cm"))
+            {
                 return (f / 2.54f) * 72f;
             }
             // millimeters
-            if (str.StartsWith("mm")) {
+            if (str.StartsWith("mm"))
+            {
                 return (f / 25.4f) * 72f;
             }
             // picas
-            if (str.StartsWith("pc")) {
+            if (str.StartsWith("pc"))
+            {
                 return f * 12f;
             }
             // 1em is equal to the current font size
-            if (str.StartsWith("em")) {
+            if (str.StartsWith("em"))
+            {
                 return f * actualFontSize;
             }
             // one ex is the x-height of a font (x-height is usually about half the
             // font-size)
-            if (str.StartsWith("ex")) {
+            if (str.StartsWith("ex"))
+            {
                 return f * actualFontSize / 2;
             }
             // default: we assume the length was measured in points
             return f;
         }
-    
+
         /// <summary>
         /// Converts a <CODE>Color</CODE> into a HTML representation of this <CODE>Color</CODE>.
         /// </summary>
         /// <param name="color">the <CODE>Color</CODE> that has to be converted.</param>
         /// <returns>the HTML representation of this <CODE>Color</CODE></returns>
-        public static Color DecodeColor(String s) {
+        public static Color DecodeColor(String s)
+        {
             if (s == null)
                 return null;
             s = s.ToLower(CultureInfo.InvariantCulture).Trim();
-            try {
+            try
+            {
                 return WebColors.GetRGBColor(s);
             }
-            catch {
+            catch
+            {
             }
             return null;
         }
@@ -419,14 +439,16 @@ namespace RazorPDF.Legacy.Text.Html {
         /// </summary>
         /// <param name="str">a string of this form: 'key1="value1"; key2="value2";... keyN="valueN" '</param>
         /// <returns>a Properties object</returns>
-        public static Properties ParseAttributes(string str) {
-            Properties result = new Properties();
+        public static TagProperties ParseAttributes(string str)
+        {
+            var result = new TagProperties();
             if (str == null) return result;
             StringTokenizer keyValuePairs = new StringTokenizer(str, ";");
             StringTokenizer keyValuePair;
             string key;
             string value;
-            while (keyValuePairs.HasMoreTokens()) {
+            while (keyValuePairs.HasMoreTokens())
+            {
                 keyValuePair = new StringTokenizer(keyValuePairs.NextToken(), ":");
                 if (keyValuePair.HasMoreTokens()) key = keyValuePair.NextToken().Trim().Trim();
                 else continue;
@@ -451,12 +473,14 @@ namespace RazorPDF.Legacy.Text.Html {
         * @return the String stripped of its comment section
         */
         public static string RemoveComment(String str, String startComment,
-                String endComment) {
+                String endComment)
+        {
             StringBuilder result = new StringBuilder();
             int pos = 0;
             int end = endComment.Length;
             int start = str.IndexOf(startComment, pos);
-            while (start > -1) {
+            while (start > -1)
+            {
                 result.Append(str.Substring(pos, start - pos));
                 pos = str.IndexOf(endComment, start) + end;
                 start = str.IndexOf(startComment, pos);
