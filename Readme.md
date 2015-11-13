@@ -1,7 +1,7 @@
 RazorPDF2
 ==============
 
-RazorPDF is a simple project that makes it a breeze to create PDFs using the Razor view engine. Since Razor is really a template syntax, it can do lot more than just generate HTML.  RazorPDF uses it to generate iText XML. Then using the iTextSharp library, we turn that iText XML into a PDF to return. The end result is a easy to use, clean method for generating PDFs.
+RazorPDF is a simple project that makes it a breeze to create PDFs using the Razor view engine. Since Razor is really a template syntax, it can do lot more than just generate HTML. RazorPDF uses it to generate iText XML older notation. Then using the iTextSharp library, we turn that iText XML into a PDF to return. The end result is a easy to use, clean method for generating PDFs.
 
 This project is a continuation from original Al Nyveldt's project. Apparently the guy died since 2013 and all the pull request made in the original repository (some of them made by me) were unanswered. This encouraged me to fork his repository and make the changes by myself, but is not simple as it seemed before.
 
@@ -9,11 +9,20 @@ This project is a continuation from original Al Nyveldt's project. Apparently th
 
 What I did in this project is to blend [RazorPDF](https://github.com/RazorAnt/RazorPDF), [iTextSharp 4.1.6](https://github.com/cigano/iTextSharp-4.1.6) and [MvcRazorToPdf](https://github.com/cigano/MvcRazorToPdf). I admit it's not the optimal solution, but at least works with all your project packages updated and without crashing anything. 
 
-##Usage
-The easiest way to get started with RazorPDF is to add the Nuget package to your MVC project. There is a short screencast on [my blog](http://nyveldt.com/blog/page/razorpdf) to get you started so well as a sample project and some syntax samples.
+## Usage
 
-##Acknowledgements
+The easiest way to get started with RazorPDF is to add the NuGet package to your MVC project:
+
+    Install-Package RazorPDF2
+
+There is a short screencast on [Nyveldt's blog](http://nyveldt.com/blog/page/razorpdf) to get you started so well as a sample project and some syntax samples.
+
+## Acknowledgements
+
 RazorPDF likely wouldn't exist without the [Spark view engine](http://sparkviewengine.com/). The ability to create PDFs with the Spark view engine is something I've missed often since switching to using Razor as my default view engine in MVC projects. Huge thanks to [Louis DeJardin](http://whereslou.com/) for putting together the Spark view engine many years ago and for the idea of mixing Spark with iTextSharp as a nice way to make PDFs.
 
-Also, RazorPDF is worthless without [iTextSharp](http://sourceforge.net/projects/itextsharp/).  Thanks so much to the team that works on that incredible project.
+Also, RazorPDF is worthless without [iTextSharp](http://sourceforge.net/projects/itextsharp/). Thanks so much to the team that works on that incredible project.
 
+## License
+
+RazorPDF2 is licensed under [MIT License](https://opensource.org/licenses/MIT). 
